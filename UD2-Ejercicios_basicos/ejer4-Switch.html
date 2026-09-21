@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let num1 = 6
+        let num2 = 3
+
+        let operacion = prompt('Que operacion desea realizar')
+
+        switch (operacion) {
+            case 1:
+                document.write('Suma: ', num1,' + ', num2, ' = ',(num1+num2))
+                break;
+            case 2:
+                document.write('Resta: ', num1,' - ', num2, ' = ',(num1-num2))
+                break
+            case 3:
+                document.write('Multiplicacion: ', num1,' * ', num2, ' = ',(num1*num2))
+                break
+            case 4:
+                document.write('Division: ', num1,' / ', num2, ' = ',(num1/num2))
+                break
+            default:
+        }
+    </script>
+</body>
+</html>

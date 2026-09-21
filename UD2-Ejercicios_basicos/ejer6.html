@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+
+        let numero = prompt('Introduce un numero: ')
+        var factorial = 1;
+
+        if (esEntradaNumerica(numero)) {
+            
+            // Comprobar si se trata del 1 o del 0
+            if (numero == 1 || numero == 0) {
+                document.write(numero,'! = ', 1)
+            } else {
+                
+                for (i = 1; i <= numero; i++) {
+                    factorial *= i;
+                }
+                document.write("El factorial de ", numero, " es: ", factorial)    
+
+            }
+
+        } else {
+            document.write('No es un dato valido')
+        }
+
+    
+        function esEntradaNumerica(valor) {
+            if (valor.trim() === "") return false
+            return !isNaN(Number(valor))
+        }
+
+    </script>
+</body>
+</html>
