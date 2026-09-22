@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const numSecreto = 4 // Numero que el usuario debe adivinar
+
+        // Variable semaforo para salir del bucle cuando el usuario acierte el numero
+        let adivina = false
+        
+        // Cuadro de dialogo
+        while (!adivina) {
+            
+            var entrada = Number(prompt("Digita un numero hasta adivinar el secreto"))
+
+            // Comprobacion si adivino el usuario el numero o no
+            if (entrada === numSecreto) {
+                adivina = true
+                alert('Numero adivinado!, hasta luego')
+            } else {
+                alert('Numero o valor incorrecto, intentalo de nuevo')
+            }
+        }
+
+    </script>
+</body>
+</html>
