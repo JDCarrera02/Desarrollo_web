@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejer 11</title>
+</head>
+<body>
+    <script>
+
+        // Declarar variable
+        let num
+        // Semaforo para salir del bucle
+        let valido = false
+
+        do {
+
+            // Pedir el numero al usuario
+            num = prompt('Digita un numero: ')
+
+            // Comprobar entrada
+            if (esEntradaNumerica(num)){
+                valido = true
+            } else {
+                alert('Has introducido un dato no valido...') // En el caso contrario no se realiza ningun calculo de cifras
+            }
+            
+        } while (!valido)
+
+        // Calculo de cifras
+
+        // Si el numero es negativo (se pone su valor absoluto), y limpiar caracteres innecesarios
+        const numLimpio = Math.abs(num).toString().replace('.','') 
+         // Imprimir resultados
+        alert(`El numero digitado tiene: ${numLimpio.length} cifras`)
+        
+
+        function esEntradaNumerica(valor) {
+            if (valor.trim() === "") return false
+            return !isNaN(Number(valor))
+        }
+    </script>
+    
+</body>
+</html>

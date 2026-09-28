@@ -3,11 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ejer10</title>
 </head>
 <body>
     <script>
-        
+
+        // IVA
+        const IVA = 0.21
+
+        // Precio base del billete
+        let precioBillete = 12.5
+
+        // Pedir datos al usuario
+        let nombre = prompt("Ingresa tu nombre: ")
+        let edad = parseInt(prompt("Ingresa tu edad: "))
+        let diaViaje = prompt("¿Que dia de la semana vas a viajar?")
+
+        // Array con los dias de la semana validos para descuento
+        let diasDescuento = ["miercoles", "viernes"]
+
+        // Variable descuento, sera acumulativa, ya que un pasajero puede cumplir con varias condiciones
+        let descuento = 0 // Por defecto
+
+        // Comprobacion para posibles descuentos
+
+        // Por edad. Debe estar entre los 18 y 16 años, o mayor de 60 (descuento del 15%)
+        if ((edad >= 18 && edad <= 26) || edad >= 60) {
+            alert("Se hace descuento por edad ")
+            descuento = precioBillete * 0.15
+            precioBillete -= descuento
+        }
+
+        if (diaViaje != null) {
+            
+            const existe = diasDescuento.includes(diaViaje.toLowerCase())
+            
+            if (existe) {
+                alert("Se hace descuento por dia de la semana ")
+                descuento = precioBillete * 0.05 // Descuento del 5%
+                precioBillete -= descuento
+            }
+        }
+
+        alert(`Precio del billete sin IVA: ${precioBillete}`)
+        alert(`Precio del billete con IVA: ${precioBillete*(IVA+1)}`) // Se suma directamente el IVA
+
     </script>
 </body>
 </html>
