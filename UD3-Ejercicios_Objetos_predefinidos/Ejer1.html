@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        
+        // Declarar la variable que guardara los numeros que digite el usuario
+        let nums = []
+
+        // Suma de los numeros ingresados
+        let suma = 0
+
+        // Entrada del usuario
+        let entrada
+
+        alert('El programa pedira numeros de manera indefinida, si desea salir, teclea el cero')
+
+        // Bucle para llenar el arreglo
+        while (true) {
+            
+            entrada = Number(prompt('Digita un numero: '))
+
+            // Comprobar entrada
+            if (!Number.isInteger(entrada)) {
+                alert('Debes introducir un número entero.');
+            } else if (entrada !== 0) {
+                // Añadir el valor al arreglo
+                nums.push(entrada)
+
+                // Sumar el contador
+                suma += entrada
+            }
+
+            if (entrada === 0) {
+                // Salir del bucle
+                break
+            }  
+        }
+
+        // Comprobar que se hayan introducido numeros
+        if (nums.length === 0) {
+            alert("No se introdujeron números.");
+        } else {
+            // Sacar la media e imprimirla
+            const media = suma / nums.length;
+            alert(`La media aritmética es: ${media}`)
+        }
+
+    </script>
+</body>
+</html>
