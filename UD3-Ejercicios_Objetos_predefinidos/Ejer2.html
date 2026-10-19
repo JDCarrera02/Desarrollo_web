@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,23 +12,35 @@
         let letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T']
 
         // Entrada del usuario
-        let entrada = Number(prompt('Ingresa los digitos (sin la letra) de tu dni'))
+        let entrada = prompt('Ingresa los digitos de tu dni')
 
-        // Comprobar que solamente sean numeros
-
-        
+    
         // Comprobar tamaño
-        if (entrada.length > 8) {
-            alert('Digite unicamente los numeros sin la letra')
+        if (entrada.length === 9) {
+
+             // Obtener entrada sin la letra
+            let sinLetra = entrada.substring(entrada.length-1,0).toUpperCase()
+
+            // Hacer el calculo
+            const calculo = sinLetra%23 
+            
+            // Si el resto es menor que el tamaño de la lista de letras (si es igual, no es valido porque solamente hay 23 posiciones, hay un tamaño de 24 elementos, pero de indices solo tenemos 23)
+            valido = calculo < letras.length
+
+            if (valido){
+                // Obtener valor en el array a partir del resto obtenido
+                let valor = letras[calculo]
+                alert('El DNI introducido es valido')
+
+            } else {
+                alert('El DNI introducido no es válido')
+            }
+
+        } else {
+
+            alert('La longitud del dni debe ser de 9 caracteres')
+           
         }
-
-        // Comprobar si se trata de numeros
-        if (!Number.isInteger(entrada)) {
-            alert('Debes introducir numeros.')
-        }ñ
-
-        // Hacer el calculo
-
         
     </script>
 </body>

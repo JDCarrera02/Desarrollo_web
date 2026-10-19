@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+
+    <script>
+        
+        let arrayExample = [4,0,3,4,7,3,5,8,1,8,8,0,2,3,1,2,5,7,3,2,5,1]
+
+        let copiaArray = [...new Set(arrayExample)]
+
+        let array2SinDuplicados = copiaArray.sort((a, b) => a - b);
+
+        document.write('Array ordenado y sin duplicados = ',array2SinDuplicados)
+
+    </script>
+    
+</body>
+</html>
