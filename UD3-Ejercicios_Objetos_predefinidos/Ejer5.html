@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 5</title>
+</head>
+<body>
+    <script>
+
+        let fechaEntrada
+        let timestamp
+        let fechaObjeto
+
+        do{
+
+            // Pedir al usuario la fecha
+            let fechaEntrada = prompt('Ingresa una fecha (formato Año-Mes-Dia -> ej: 26-10-20 o 2026-10-20)');
+
+            // En el caso que el usuario cancele el prompt, se rompe el bucle para salir
+            if (fechaEntrada === null) {
+                alert('Operación cancelada.');
+                break;
+            }
+        
+            // Si el año tiene dos digitos, se añade 20, suponemos que es el siglo XXI
+            let partes = fechaEntrada.split('-');
+            if (partes.length === 3 && partes[0].length === 2) {
+                partes[0] = '20' + partes[0]; // Convertir YY en AAAA
+                fechaEntrada = partes.join('-'); // Recomponer el string modificado
+            }
+        
+            // 3. Pasamos el string corregido a Date.parse()
+            // Esto devuelve los milisegundos (timestamp) o NaN si es inválido
+            timestamp = Date.parse(fechaEntrada);
+        
+            // 4. Corrección de la validación: Usamos la función isNaN() correctamente
+            if (isNaN(timestamp)) {
+                alert('La fecha ingresada no es válida o el formato es incorrecto. Inténtalo nuevamente.');
+            } else {
+                // 5. Convertimos el timestamp de vuelta a un Objeto Date legible
+                fechaObjeto = new Date(timestamp);
+
+                // Mostramos la fecha formateada en el documento
+                document.write('Fecha procesada con éxito: ', fechaObjeto.toLocaleDateString());
+                break // Rompemos el bucle infinito
+            }
+
+        } while(true)
+
+        console.log(fechaObjeto)
+
+        // Array doble indexado
+        const festivos = [[1,6], [], [], [17, 18, 23], [1], [], [], [15], [], [12], [1], [6, 8, 25]]
+
+        // Array de los dias
+        const diasSemana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
+
+        // Creacion de la tabla
+
+        // Escribir los dias de la semana
+        for (let i = 0; i < diasSemana.length; i++) {
+            document.write("<tr>")
+            document.write("<td>"+diasSemana[i]+"</td>")
+            document.write("<td>"+"   "+"</td>")
+            document.write("</tr>")
+        }
+
+        // --------------------- Hasta aca voy
+             
+    </script>
+</body>
+</html>
