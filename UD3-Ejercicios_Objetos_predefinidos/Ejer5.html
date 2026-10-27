@@ -42,7 +42,7 @@
                 fechaObjeto = new Date(timestamp);
 
                 // Mostramos la fecha formateada en el documento
-                document.write('Fecha procesada con éxito: ', fechaObjeto.toLocaleDateString());
+                // document.write('Fecha procesada con éxito: ', fechaObjeto.toLocaleDateString());
                 break // Rompemos el bucle infinito
             }
 
@@ -58,15 +58,56 @@
 
         // Creacion de la tabla
 
+        // Capturar mes (ingresado al principio del programa)
+        const mes = fechaObjeto.getMonth()
+
+        // ¿Qué dia empieza el mes seleccionado por el usuario?
+        const empieza = fechaObjeto.getDay()
+        
+        // FLag para comprobar si estamos bien
+        console.log(`El mes: ${mes} y el dia ${empieza}`)
+
+        // Ir al indice del mes en el array doble indexado
+        const posicion = festivos[mes]
+
+        // Para imprimir los numeros (de los dias)
+        let dias = 1 // Empezamos por el dia 1
+
+        // Apartado de escritura del calendario
+
         // Escribir los dias de la semana
         for (let i = 0; i < diasSemana.length; i++) {
+            
+            // Encabezado Nombres de los dias de la semana
             document.write("<tr>")
             document.write("<td>"+diasSemana[i]+"</td>")
             document.write("<td>"+"   "+"</td>")
+
+            // Comprobar si la posicion tiene mas de un elemento para recorrerlo, si no, solamente se imprime el elemento existente
+
+            if (posicion.length >= 1){ // Si tiene uno o mas elementos
+
+                
+                // --------------------- Hasta aca voy
+
+                // Elemento tr
+                document.write("<tr>")
+
+                for (let j = 0; j < posicion.length; j++) {
+                    document.write()
+                }
+
+                document.write("</tr>")
+
+            } else {
+                // Si no tiene elementos, no se imprime el festivo
+            }
+            
+
             document.write("</tr>")
         }
-
-        // --------------------- Hasta aca voy
+        
+        
              
     </script>
 </body>
