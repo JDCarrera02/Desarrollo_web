@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 19</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 19: Tabla con sumas de filas y columnas
+  Enunciado: Dadas filas y columnas, escribe una tabla con los números en orden descendente, la suma de cada fila a la derecha, la de cada columna abajo y el total en la esquina.
+-->
+<div class="info">
+<h1>Ejercicio 19 – Tabla con sumas de filas y columnas</h1>
+<p>Dadas filas y columnas, escribe una tabla con los números en orden descendente, la suma de cada fila a la derecha, la de cada columna abajo y el total en la esquina.</p>
+<p><b>Qué se usa:</b></p><ul><li>el primer número es filas * columnas, y vamos restando con --</li><li>suma de fila: se reinicia a 0 en cada fila</li><li>suma de columna: un array con un acumulador por columna</li><li>fórmula valor = total - (i * columnas + j)</li><li>for anidados</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: for anidados y un array para las sumas de columna
+// ==============================================================
+function version1() {
+    var filas = parseInt(prompt("Número de filas:"));
+    var columnas = parseInt(prompt("Número de columnas:"));
+
+    var valor = filas * columnas;          // empezamos por el más alto (4x5 = 20)
+    var total = 0;
+    var sumaCol = [];                      // un acumulador por columna
+    for (var j = 0; j < columnas; j++) sumaCol[j] = 0;
+
+    document.write("<table border='1'>");
+    for (var i = 1; i <= filas; i++) {
+        var sumaFila = 0;                  // se reinicia en cada fila
+        document.write("<tr>");
+        for (var j = 0; j < columnas; j++) {
+            document.write("<td>" + valor + "</td>");
+            sumaFila += valor;
+            sumaCol[j] += valor;
+            valor--;
+        }
+        total += sumaFila;
+        document.write("<td>Suma(fil" + i + ")=" + sumaFila + "</td></tr>");
+    }
+
+    // Última fila: sumas de columnas + total (en el enunciado pone "Suma(fil5)", es el total)
+    document.write("<tr>");
+    for (var j = 0; j < columnas; j++) {
+        document.write("<td>Suma(col" + (j + 1) + ")=" + sumaCol[j] + "</td>");
+    }
+    document.write("<td>Total=" + total + "</td></tr>");
+    document.write("</table>");
+}
+
+// ==============================================================
+// VERSIÓN 2: Sin array: las columnas se suman con un segundo bucle
+// ==============================================================
+function version2() {
+    let filas = parseInt(prompt("Número de filas:"));
+    let columnas = parseInt(prompt("Número de columnas:"));
+    let maximo = filas * columnas;
+    let total = 0;
+
+    document.write("<table border='1'>");
+
+    // Parte 1: filas con su suma
+    let valor = maximo;
+    for (let i = 1; i <= filas; i++) {
+        let sumaFila = 0;
+        document.write("<tr>");
+        for (let j = 1; j <= columnas; j++) {
+            document.write(`<td>${valor}</td>`);
+            sumaFila += valor;
+            valor--;
+        }
+        total += sumaFila;
+        document.write(`<td>Suma(fil${i})=${sumaFila}</td></tr>`);
+    }
+
+    // Parte 2: para cada columna recorremos sus filas.
+    // El valor de la fila i, columna j (empezando en 0) es: maximo - (i * columnas + j)
+    document.write("<tr>");
+    for (let j = 0; j < columnas; j++) {
+        let sumaCol = 0;
+        for (let i = 0; i < filas; i++) {
+            sumaCol += maximo - (i * columnas + j);
+        }
+        document.write(`<td>Suma(col${j + 1})=${sumaCol}</td>`);
+    }
+    document.write(`<td>Total=${total}</td></tr></table>`);
+}
+
+// ==============================================================
+// VERSIÓN 3: Funciones + todo el HTML en una variable
+// ==============================================================
+// Valor de la celda (fila i, columna j), empezando a contar en 0
+function valorCelda(i, j, filas, columnas) {
+    return filas * columnas - (i * columnas + j);
+}
+
+function version3() {
+    let filas, columnas;
+    do { filas = parseInt(prompt("Filas:")); } while (isNaN(filas) || filas < 1);
+    do { columnas = parseInt(prompt("Columnas:")); } while (isNaN(columnas) || columnas < 1);
+
+    let html = "<table border='1' cellpadding='5'>";
+    let total = 0;
+
+    for (let i = 0; i < filas; i++) {
+        html += "<tr>";
+        let sumaFila = 0;
+        for (let j = 0; j < columnas; j++) {
+            let v = valorCelda(i, j, filas, columnas);
+            html += "<td>" + v + "</td>";
+            sumaFila += v;
+        }
+        total += sumaFila;
+        html += "<td><b>Suma(fil" + (i + 1) + ")=" + sumaFila + "</b></td></tr>";
+    }
+
+    html += "<tr>";
+    for (let j = 0; j < columnas; j++) {
+        let sumaCol = 0;
+        for (let i = 0; i < filas; i++) sumaCol += valorCelda(i, j, filas, columnas);
+        html += "<td><b>Suma(col" + (j + 1) + ")=" + sumaCol + "</b></td>";
+    }
+    html += "<td><b>Total=" + total + "</b></td></tr></table>";
+
+    document.write(html);
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) for anidados y un array para las sumas de columna\n2) Sin array: las columnas se suman con un segundo bucle\n3) Funciones + todo el HTML en una variable", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

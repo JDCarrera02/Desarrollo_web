@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 3</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 3: Tablas de multiplicar del 1 al 10
+  Enunciado: Genera la tabla de multiplicar de los 10 primeros números, dentro de un <section> y dentro de un <table>.
+-->
+<div class="info">
+<h1>Ejercicio 3 – Tablas de multiplicar del 1 al 10</h1>
+<p>Genera la tabla de multiplicar de los 10 primeros números, dentro de un &lt;section&gt; y dentro de un &lt;table&gt;.</p>
+<p><b>Qué se usa:</b></p><ul><li>bucle for</li><li>bucles anidados (un for dentro de otro)</li><li>construir HTML de tabla: &lt;table&gt; &lt;tr&gt; &lt;td&gt; &lt;th&gt;</li><li>acumular texto en una variable con +=</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: Cuadrícula 10×10 con dos for anidados
+// ==============================================================
+function version1() {
+    document.write("<section>");
+    document.write("<h2>Tablas de multiplicar del 1 al 10</h2>");
+    document.write("<table border='1'>");
+
+    // Fila de cabecera: x | 1 | 2 | ... | 10
+    document.write("<tr><th>x</th>");
+    for (let j = 1; j <= 10; j++) {
+        document.write("<th>" + j + "</th>");
+    }
+    document.write("</tr>");
+
+    // Una fila por cada número i, y en cada fila una celda por cada j
+    for (let i = 1; i <= 10; i++) {
+        document.write("<tr><th>" + i + "</th>");
+        for (let j = 1; j <= 10; j++) {
+            document.write("<td>" + (i * j) + "</td>");   // paréntesis para que multiplique antes de concatenar
+        }
+        document.write("</tr>");
+    }
+
+    document.write("</table>");
+    document.write("</section>");
+}
+
+// ==============================================================
+// VERSIÓN 2: Acumulando todo el HTML en una variable y un solo document.write
+// ==============================================================
+function version2() {
+    // Vamos sumando trozos de HTML a la variable html y al final la escribimos de golpe
+    let html = "<section><h2>Tablas de multiplicar</h2><table border='1'>";
+
+    // Columnas = tabla de cada número (1..10); filas = multiplicador (1..10)
+    html += "<tr>";
+    for (let i = 1; i <= 10; i++) {
+        html += "<th>Tabla del " + i + "</th>";
+    }
+    html += "</tr>";
+
+    for (let j = 1; j <= 10; j++) {
+        html += "<tr>";
+        for (let i = 1; i <= 10; i++) {
+            html += `<td>${i} x ${j} = ${i * j}</td>`;
+        }
+        html += "</tr>";
+    }
+
+    html += "</table></section>";
+    document.write(html);
+}
+
+// ==============================================================
+// VERSIÓN 3: Con while: una tabla por cada número
+// ==============================================================
+function version3() {
+    document.write("<section><h2>Tablas de multiplicar</h2>");
+
+    let i = 1;
+    while (i <= 10) {                       // un table por cada número del 1 al 10
+        document.write("<table border='1' style='display:inline-table; margin:5px'>");
+        document.write("<tr><th>Tabla del " + i + "</th></tr>");
+        let j = 1;
+        while (j <= 10) {
+            document.write("<tr><td>" + i + " x " + j + " = " + (i * j) + "</td></tr>");
+            j++;                            // ¡no olvidar incrementar o el bucle es infinito!
+        }
+        document.write("</table>");
+        i++;
+    }
+
+    document.write("</section>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) Cuadrícula 10×10 con dos for anidados\n2) Acumulando todo el HTML en una variable y un solo document.write\n3) Con while: una tabla por cada número", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

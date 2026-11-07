@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 5</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 5: ¿Cuál es mayor?
+  Enunciado: Pide dos números y di cuál es el mayor.
+-->
+<div class="info">
+<h1>Ejercicio 5 – ¿Cuál es mayor?</h1>
+<p>Pide dos números y di cuál es el mayor.</p>
+<p><b>Qué se usa:</b></p><ul><li>convertir con parseFloat()/Number() ANTES de comparar</li><li>operadores de comparación &gt; &lt; ==</li><li>if / else if / else</li><li>Math.max()</li><li>funciones con return</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: if / else if / else (contemplando que sean iguales)
+// ==============================================================
+function version1() {
+    // ¡OJO! Sin parseFloat se comparan TEXTOS: "10" < "9" es true (compara carácter a carácter)
+    var n1 = parseFloat(prompt("Primer número:"));
+    var n2 = parseFloat(prompt("Segundo número:"));
+
+    if (n1 > n2) {
+        document.write("<p>El mayor es " + n1 + "</p>");
+    } else if (n2 > n1) {
+        document.write("<p>El mayor es " + n2 + "</p>");
+    } else {
+        document.write("<p>Los dos números son iguales</p>");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 2: Math.max() y ternario
+// ==============================================================
+function version2() {
+    let n1 = Number(prompt("Primer número:"));
+    let n2 = Number(prompt("Segundo número:"));
+
+    // Math.max devuelve el mayor de los valores que le pasemos
+    let mayor = Math.max(n1, n2);
+
+    let mensaje = (n1 === n2) ? "Son iguales" : "El mayor es " + mayor;
+    document.write(`<p>${mensaje}</p>`);
+}
+
+// ==============================================================
+// VERSIÓN 3: Funciones: una para pedir números válidos y otra para comparar
+// ==============================================================
+// Pide un número hasta que el usuario escriba uno válido
+function pedirNumero(mensaje) {
+    let num = parseFloat(prompt(mensaje));
+    while (isNaN(num)) {
+        num = parseFloat(prompt("Eso no es un número. " + mensaje));
+    }
+    return num;                         // return devuelve el valor a quien llamó a la función
+}
+
+// Devuelve un texto con el resultado de comparar a y b
+function compararNumeros(a, b) {
+    if (a > b) return a + " es mayor que " + b;
+    if (b > a) return b + " es mayor que " + a;
+    return "Los dos valen " + a;
+}
+
+function version3() {
+    let x = pedirNumero("Primer número:");
+    let y = pedirNumero("Segundo número:");
+    document.write("<p>" + compararNumeros(x, y) + "</p>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) if / else if / else (contemplando que sean iguales)\n2) Math.max() y ternario\n3) Funciones: una para pedir números válidos y otra para comparar", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

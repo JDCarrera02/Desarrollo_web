@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 20 · Versión 3</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 20: Juego: adivina el número
+  Enunciado: Pide dos enteros (en cualquier orden), genera un aleatorio entre ellos y pide la dificultad (fácil N/2, normal N/4, difícil N/8 intentos, N = rango). En fácil y normal da pistas mayor/menor. Si acierta, pide el nombre y pon la puntuación en la página. Pregunta si quiere jugar de nuevo. Todo en una función jugar() lanzada con onclick.
+-->
+<div class="info">
+<h1>Ejercicio 20 · Versión 3 – Juego: adivina el número</h1>
+<p>Pide dos enteros (en cualquier orden), genera un aleatorio entre ellos y pide la dificultad (fácil N/2, normal N/4, difícil N/8 intentos, N = rango). En fácil y normal da pistas mayor/menor. Si acierta, pide el nombre y pon la puntuación en la página. Pregunta si quiere jugar de nuevo. Todo en una función jugar() lanzada con onclick.</p>
+<p><b>Qué se usa:</b></p><ul><li>Math.floor(Math.random() * (MAX - MIN + 1)) + MIN</li><li>Number.isInteger() para validar enteros</li><li>ordenar min/max con if (o Math.min/Math.max)</li><li>intentos = Math.floor(N / 2) (mínimo 1)</li><li>while con dos condiciones (quedan intentos &amp;&amp; no ha acertado)</li><li>confirm() devuelve true/false → jugar otra vez</li><li>&lt;button onclick="jugar()"&gt;</li><li>innerHTML += para añadir a la página (document.write después de cargar BORRA la página)</li></ul>
+</div>
+<p><b>Versión 3:</b> Dividido en funciones pequeñas</p>
+<hr>
+<button onclick="jugar()">Jugar</button>
+<h2>Puntuaciones</h2>
+<table border="1">
+    <thead><tr><th>Nombre</th><th>Intentos</th><th>Dificultad</th></tr></thead>
+    <tbody id="puntuaciones"></tbody>
+</table>
+
+<script>
+// Pide un entero hasta que lo sea
+function pedirEntero(mensaje) {
+    let n = Number(prompt(mensaje));
+    while (!Number.isInteger(n)) {
+        n = Number(prompt("Debe ser un número entero. " + mensaje));
+    }
+    return n;
+}
+
+// Aleatorio entre min y max, ambos incluidos
+function aleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Pide la dificultad hasta que sea válida y la devuelve sin tildes
+function pedirDificultad() {
+    while (true) {
+        let d = prompt("Dificultad: facil, normal o dificil").toLowerCase()
+                  .replace("á", "a").replace("í", "i");     // quitamos tildes
+        if (d == "facil" || d == "normal" || d == "dificil") return d;
+        alert("Dificultad no válida");
+    }
+}
+
+// Intentos según la dificultad y el tamaño del rango
+function calcularIntentos(dificultad, rango) {
+    let divisor = 8;
+    if (dificultad == "facil")  divisor = 2;
+    if (dificultad == "normal") divisor = 4;
+    return Math.max(1, Math.floor(rango / divisor));
+}
+
+// Una partida. Devuelve los intentos usados si gana, o 0 si pierde
+function partida(min, max, dificultad) {
+    let secreto = aleatorio(min, max);
+    let intentos = calcularIntentos(dificultad, max - min + 1);
+
+    for (let i = 1; i <= intentos; i++) {
+        let num = pedirEntero(`Adivina (${min}-${max}). Intento ${i}/${intentos}:`);
+        if (num == secreto) return i;                       // ganó: salimos devolviendo intentos
+        if (dificultad != "dificil" && i < intentos) {
+            alert("El secreto es " + (secreto > num ? "mayor" : "menor") + " que " + num);
+        }
+    }
+    alert("Sin intentos. Era el " + secreto);
+    return 0;
+}
+
+function jugar() {
+    let seguir = true;
+    while (seguir) {
+        let a = pedirEntero("Primer número:");
+        let b = pedirEntero("Segundo número:");
+        let min = (a < b) ? a : b;
+        let max = (a < b) ? b : a;
+        let dificultad = pedirDificultad();
+
+        let resultado = partida(min, max, dificultad);
+        if (resultado > 0) {
+            let nombre = prompt("¡Enhorabuena! ¿Tu nombre?");
+            document.getElementById("puntuaciones").innerHTML +=
+                "<tr><td>" + nombre + "</td><td>" + resultado + "</td><td>" + dificultad + "</td></tr>";
+        }
+        seguir = confirm("¿Jugar de nuevo?");
+    }
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

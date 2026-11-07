@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 13</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 13: Rombo de impares con asteriscos
+  Enunciado: Pide un número y muestra la estructura hasta el impar más próximo. Para 8: ***1*** / **333** / *55555* / 7777777
+-->
+<div class="info">
+<h1>Ejercicio 13 – Rombo de impares con asteriscos</h1>
+<p>Pide un número y muestra la estructura hasta el impar más próximo. Para 8: ***1*** / **333** / *55555* / 7777777</p>
+<p><b>Qué se usa:</b></p><ul><li>calcular el impar más próximo: si es par, n - 1</li><li>for que avanza de 2 en 2 (i += 2)</li><li>asteriscos a cada lado = (máximo - i) / 2</li><li>repeat() o for para repetir caracteres</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: for anidados (tres for pequeños dentro de uno grande)
+// ==============================================================
+function version1() {
+    var n = parseInt(prompt("Introduce un número:"));
+    // Si es par, el impar más próximo por debajo es n - 1
+    var maximo = (n % 2 == 0) ? n - 1 : n;
+
+    for (var i = 1; i <= maximo; i += 2) {     // i = 1, 3, 5, 7...
+        var lados = (maximo - i) / 2;          // asteriscos a cada lado
+
+        for (var k = 0; k < lados; k++) document.write("*");
+        for (var k = 0; k < i; k++)     document.write(i);
+        for (var k = 0; k < lados; k++) document.write("*");
+        document.write("<br>");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 2: Con repeat()
+// ==============================================================
+function version2() {
+    let n = parseInt(prompt("Introduce un número:"));
+    let maximo = (n % 2 === 0) ? n - 1 : n;
+
+    for (let i = 1; i <= maximo; i += 2) {
+        let asteriscos = "*".repeat((maximo - i) / 2);
+        document.write(asteriscos + String(i).repeat(i) + asteriscos + "<br>");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 3: while + función propia para repetir
+// ==============================================================
+// Nuestra propia versión de repeat: devuelve el texto repetido 'veces' veces
+function repetir(texto, veces) {
+    let res = "";
+    for (let k = 0; k < veces; k++) res += texto;
+    return res;
+}
+
+function version3() {
+    let n;
+    do {
+        n = parseInt(prompt("Introduce un número mayor que 0:"));
+    } while (isNaN(n) || n < 1);
+
+    let maximo = n;
+    if (n % 2 === 0) maximo--;               // si es par, bajamos uno
+
+    let i = 1;
+    let dibujo = "";
+    while (i <= maximo) {
+        let lado = repetir("*", (maximo - i) / 2);
+        dibujo += lado + repetir(i, i) + lado + "<br>";
+        i += 2;
+    }
+    document.write("<tt>" + dibujo + "</tt>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) for anidados (tres for pequeños dentro de uno grande)\n2) Con repeat()\n3) while + función propia para repetir", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

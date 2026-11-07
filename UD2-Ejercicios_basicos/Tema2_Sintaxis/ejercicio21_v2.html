@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 21 · Versión 2</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 21: Calculadora con botones
+  Enunciado: Calculadora con botones 0-9, + - * /, = y C. Cada pulsación muestra en un alert lo que llevamos ("34", "34 +", "34 + 7", "34 + 7 = 41"). Operación sin primer número o = sin operación completa: no hace nada. C reinicia.
+-->
+<div class="info">
+<h1>Ejercicio 21 · Versión 2 – Calculadora con botones</h1>
+<p>Calculadora con botones 0-9, + - * /, = y C. Cada pulsación muestra en un alert lo que llevamos ("34", "34 +", "34 + 7", "34 + 7 = 41"). Operación sin primer número o = sin operación completa: no hace nada. C reinicia.</p>
+<p><b>Qué se usa:</b></p><ul><li>variables globales (fuera de las funciones) para recordar el estado: num1, op, num2</li><li>concatenar dígitos como TEXTO ("3" + "4" = "34")</li><li>parseFloat() solo al calcular</li><li>return para salir sin hacer nada</li><li>onclick="funcion('valor')" pasando parámetros</li><li>switch para la operación</li><li>generar botones con document.write en un bucle</li></ul>
+</div>
+<p><b>Versión 2:</b> Una sola función pulsar(tecla) con switch</p>
+<hr>
+<style>
+    .calc { display: grid; grid-template-columns: repeat(4, 140px); gap: 10px; }
+    .calc button { height: 50px; font-size: 16px; }
+    .doble { grid-column: span 2; }          /* el botón = ocupa dos columnas */
+</style>
+
+<div class="calc">
+    <button onclick="pulsar('1')">1</button>
+    <button onclick="pulsar('2')">2</button>
+    <button onclick="pulsar('3')">3</button>
+    <button onclick="pulsar('+')">+</button>
+    <button onclick="pulsar('4')">4</button>
+    <button onclick="pulsar('5')">5</button>
+    <button onclick="pulsar('6')">6</button>
+    <button onclick="pulsar('-')">-</button>
+    <button onclick="pulsar('7')">7</button>
+    <button onclick="pulsar('8')">8</button>
+    <button onclick="pulsar('9')">9</button>
+    <button onclick="pulsar('*')">*</button>
+    <button onclick="pulsar('0')">0</button>
+    <button class="doble" onclick="pulsar('=')">=</button>
+    <button onclick="pulsar('/')">/</button>
+    <button onclick="pulsar('C')">C</button>
+</div>
+
+<script>
+let num1 = "", op = "", num2 = "";
+
+function calcular(a, operador, b) {
+    switch (operador) {
+        case "+": return a + b;
+        case "-": return a - b;
+        case "*": return a * b;
+        case "/": return a / b;
+    }
+}
+
+function pulsar(tecla) {
+    switch (tecla) {
+        case "+":
+        case "-":
+        case "*":
+        case "/":
+            if (num1 !== "" && num2 === "") {
+                op = tecla;
+                alert(`${num1} ${op}`);
+            }
+            break;
+
+        case "=":
+            if (num1 !== "" && op !== "" && num2 !== "") {
+                let r = calcular(parseFloat(num1), op, parseFloat(num2));
+                alert(`${num1} ${op} ${num2} = ${r}`);
+                num1 = op = num2 = "";       // asignación encadenada: las tres a ""
+            }
+            break;
+
+        case "C":
+            num1 = op = num2 = "";
+            break;
+
+        default:                             // cualquier otra tecla es un dígito
+            if (op === "") {
+                num1 += tecla;
+                alert(num1);
+            } else {
+                num2 += tecla;
+                alert(`${num1} ${op} ${num2}`);
+            }
+    }
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

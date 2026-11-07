@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 7</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 7: Pedir hasta acertar un número concreto
+  Enunciado: Pide un número una y otra vez hasta que el usuario introduzca un número concreto que elijas tú.
+-->
+<div class="info">
+<h1>Ejercicio 7 – Pedir hasta acertar un número concreto</h1>
+<p>Pide un número una y otra vez hasta que el usuario introduzca un número concreto que elijas tú.</p>
+<p><b>Qué se usa:</b></p><ul><li>do...while (se ejecuta al menos una vez)</li><li>while</li><li>while(true) + break</li><li>== compara convirtiendo tipos ("7" == 7 es true); === no</li><li>contador con ++</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: do...while
+// ==============================================================
+function version1() {
+    var SECRETO = 7;     // el número que hay que escribir
+    var num;
+
+    // do...while: primero pide y luego comprueba. Repite MIENTRAS no sea el secreto
+    do {
+        num = parseInt(prompt("Adivina el número (del 1 al 10):"));
+    } while (num != SECRETO);
+
+    document.write("<p>¡Correcto! Era el " + SECRETO + "</p>");
+}
+
+// ==============================================================
+// VERSIÓN 2: while normal (pidiendo una vez antes del bucle)
+// ==============================================================
+function version2() {
+    const SECRETO = 7;
+    let num = prompt("Adivina el número (del 1 al 10):");
+
+    // Aquí num es TEXTO ("7"). Con != se convierte solo y funciona.
+    // Con !== no funcionaría porque "7" (texto) no es idéntico a 7 (número)
+    while (num != SECRETO) {
+        num = prompt("No es ese. Prueba otra vez:");
+    }
+
+    document.write(`<p>¡Bien! Era el ${SECRETO}</p>`);
+}
+
+// ==============================================================
+// VERSIÓN 3: while(true) con break, contador de intentos y control de Cancelar
+// ==============================================================
+function version3() {
+    const SECRETO = 7;
+    let intentos = 0;
+
+    while (true) {                       // bucle "infinito" que cortamos con break
+        let texto = prompt("Adivina el número (del 1 al 10):");
+        if (texto === null) {            // pulsó Cancelar
+            document.write("<p>Te has rendido después de " + intentos + " intentos</p>");
+            break;
+        }
+        intentos++;
+        if (Number(texto) === SECRETO) {
+            document.write("<p>¡Acertaste en " + intentos + " intentos!</p>");
+            break;
+        }
+    }
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) do...while\n2) while normal (pidiendo una vez antes del bucle)\n3) while(true) con break, contador de intentos y control de Cancelar", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

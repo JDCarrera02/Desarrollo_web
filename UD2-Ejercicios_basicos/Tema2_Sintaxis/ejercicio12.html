@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 12</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 12: Comillas simples y dobles en una cadena
+  Enunciado: Muestra en un alert, en una única cadena: Hola mundo! Que fácil es incluir 'comillas simples' y "comillas dobles"
+-->
+<div class="info">
+<h1>Ejercicio 12 – Comillas simples y dobles en una cadena</h1>
+<p>Muestra en un alert, en una única cadena: Hola mundo! Que fácil es incluir 'comillas simples' y "comillas dobles"</p>
+<p><b>Qué se usa:</b></p><ul><li>carácter de escape \ → \' y \"</li><li>alternar comillas: dentro de "..." las ' no molestan</li><li>plantillas `...` admiten ' y " sin escapar</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: Cadena con comillas simples y escapando con \'
+// ==============================================================
+function version1() {
+    // La cadena va entre ' ... ' así que las ' de dentro hay que escaparlas con \'
+    alert('Hola mundo! Que fácil es incluir \'comillas simples\' y "comillas dobles"');
+}
+
+// ==============================================================
+// VERSIÓN 2: Cadena con comillas dobles y escapando con \"
+// ==============================================================
+function version2() {
+    // Ahora va entre " ... " así que las que hay que escapar son las dobles
+    alert("Hola mundo! Que fácil es incluir 'comillas simples' y \"comillas dobles\"");
+}
+
+// ==============================================================
+// VERSIÓN 3: Plantilla con backticks: no hay que escapar nada
+// ==============================================================
+function version3() {
+    // Con `...` las ' y las " se pueden poner tal cual
+    let mensaje = `Hola mundo! Que fácil es incluir 'comillas simples' y "comillas dobles"`;
+    alert(mensaje);
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) Cadena con comillas simples y escapando con \'\n2) Cadena con comillas dobles y escapando con \"\n3) Plantilla con backticks: no hay que escapar nada", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

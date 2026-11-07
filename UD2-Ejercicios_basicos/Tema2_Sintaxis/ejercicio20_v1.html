@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 20 · Versión 1</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 20: Juego: adivina el número
+  Enunciado: Pide dos enteros (en cualquier orden), genera un aleatorio entre ellos y pide la dificultad (fácil N/2, normal N/4, difícil N/8 intentos, N = rango). En fácil y normal da pistas mayor/menor. Si acierta, pide el nombre y pon la puntuación en la página. Pregunta si quiere jugar de nuevo. Todo en una función jugar() lanzada con onclick.
+-->
+<div class="info">
+<h1>Ejercicio 20 · Versión 1 – Juego: adivina el número</h1>
+<p>Pide dos enteros (en cualquier orden), genera un aleatorio entre ellos y pide la dificultad (fácil N/2, normal N/4, difícil N/8 intentos, N = rango). En fácil y normal da pistas mayor/menor. Si acierta, pide el nombre y pon la puntuación en la página. Pregunta si quiere jugar de nuevo. Todo en una función jugar() lanzada con onclick.</p>
+<p><b>Qué se usa:</b></p><ul><li>Math.floor(Math.random() * (MAX - MIN + 1)) + MIN</li><li>Number.isInteger() para validar enteros</li><li>ordenar min/max con if (o Math.min/Math.max)</li><li>intentos = Math.floor(N / 2) (mínimo 1)</li><li>while con dos condiciones (quedan intentos &amp;&amp; no ha acertado)</li><li>confirm() devuelve true/false → jugar otra vez</li><li>&lt;button onclick="jugar()"&gt;</li><li>innerHTML += para añadir a la página (document.write después de cargar BORRA la página)</li></ul>
+</div>
+<p><b>Versión 1:</b> while + if (la más directa)</p>
+<hr>
+<button onclick="jugar()">Jugar</button>
+<h2>Puntuaciones</h2>
+<div id="puntuaciones"></div>
+
+<script>
+function jugar() {
+    var otraVez = true;
+
+    while (otraVez) {
+        // 1. Pedir dos números ENTEROS (si no lo son, se vuelven a pedir)
+        var a = Number(prompt("Primer número entero:"));
+        while (!Number.isInteger(a)) {
+            a = Number(prompt("Tiene que ser entero. Primer número:"));
+        }
+        var b = Number(prompt("Segundo número entero:"));
+        while (!Number.isInteger(b)) {
+            b = Number(prompt("Tiene que ser entero. Segundo número:"));
+        }
+
+        // 2. Pueden darnos primero el alto o el bajo: los ordenamos
+        var min, max;
+        if (a < b) { min = a; max = b; }
+        else       { min = b; max = a; }
+
+        // 3. Número aleatorio entre min y max (incluidos)
+        var secreto = Math.floor(Math.random() * (max - min + 1)) + min;
+
+        // 4. Dificultad → número de intentos
+        var dificultad = prompt("Dificultad: facil, normal o dificil").toLowerCase();
+        var N = max - min + 1;                 // tamaño del rango
+        var intentos;
+        if (dificultad == "facil" || dificultad == "fácil") {
+            intentos = Math.floor(N / 2);
+        } else if (dificultad == "normal") {
+            intentos = Math.floor(N / 4);
+        } else {
+            dificultad = "dificil";            // cualquier otra cosa la tratamos como difícil
+            intentos = Math.floor(N / 8);
+        }
+        if (intentos < 1) intentos = 1;        // al menos un intento
+
+        // 5. Bucle del juego: mientras queden intentos y no haya acertado
+        var usados = 0;
+        var acertado = false;
+        while (usados < intentos && !acertado) {
+            var num = Number(prompt("Adivina el número entre " + min + " y " + max +
+                                    "\nTe quedan " + (intentos - usados) + " intentos"));
+            usados++;
+
+            if (num == secreto) {
+                acertado = true;
+            } else if (dificultad != "dificil") {   // pistas solo en fácil y normal
+                if (secreto > num) alert("El número es MAYOR que " + num);
+                else               alert("El número es MENOR que " + num);
+            }
+        }
+
+        // 6. Resultado
+        if (acertado) {
+            var nombre = prompt("¡Enhorabuena! Lo has acertado en " + usados + " intentos. ¿Cómo te llamas?");
+            // innerHTML += añade HTML dentro del div sin borrar la página
+            document.getElementById("puntuaciones").innerHTML +=
+                "<p>" + nombre + " → " + usados + " intentos (" + dificultad + ")</p>";
+        } else {
+            alert("Se acabaron los intentos. El número era " + secreto);
+        }
+
+        otraVez = confirm("¿Quieres jugar de nuevo?");   // Aceptar = true, Cancelar = false
+    }
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

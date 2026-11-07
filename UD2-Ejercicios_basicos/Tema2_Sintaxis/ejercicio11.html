@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 11</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 11: Número de cifras
+  Enunciado: Pregunta un número entero y di cuántas cifras tiene. Si no es un número, sigue pidiéndolo.
+-->
+<div class="info">
+<h1>Ejercicio 11 – Número de cifras</h1>
+<p>Pregunta un número entero y di cuántas cifras tiene. Si no es un número, sigue pidiéndolo.</p>
+<p><b>Qué se usa:</b></p><ul><li>while (isNaN(...)) para repetir hasta que sea número</li><li>String(n).length = número de caracteres</li><li>Math.abs() para quitar el signo</li><li>dividir entre 10 con Math.floor() para contar cifras</li><li>recorrer un texto con for y charAt()</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: Convertir a texto y mirar su length
+// ==============================================================
+function version1() {
+    var n = parseInt(prompt("Introduce un número entero:"));
+    while (isNaN(n)) {
+        n = parseInt(prompt("Eso no es un número. Introduce un número entero:"));
+    }
+
+    // Math.abs quita el "-" para que no cuente como cifra
+    // String(...) lo convierte a texto y .length nos dice cuántos caracteres tiene
+    var cifras = String(Math.abs(n)).length;
+
+    document.write("<p>El número " + n + " tiene " + cifras + " cifras</p>");
+}
+
+// ==============================================================
+// VERSIÓN 2: Dividiendo entre 10 hasta llegar a 0
+// ==============================================================
+function version2() {
+    let texto, n;
+    do {
+        texto = prompt("Introduce un número entero:");
+        n = Number(texto);
+    } while (texto === null || texto.trim() === "" || !Number.isInteger(n));
+    // Number("") da 0, por eso comprobamos también que no esté vacío
+
+    let copia = Math.abs(n);
+    let cifras = 0;
+    // do...while para que el 0 cuente como 1 cifra
+    do {
+        cifras++;
+        copia = Math.floor(copia / 10);   // 1234 → 123 → 12 → 1 → 0
+    } while (copia > 0);
+
+    document.write(`<p>${n} tiene ${cifras} cifra(s)</p>`);
+}
+
+// ==============================================================
+// VERSIÓN 3: Trabajando con el texto carácter a carácter
+// ==============================================================
+// Devuelve true si TODOS los caracteres son dígitos (permite un "-" al principio)
+function esEntero(texto) {
+    if (texto === null || texto === "" || texto === "-") return false;
+    for (let i = 0; i < texto.length; i++) {
+        let c = texto.charAt(i);
+        if (i === 0 && c === "-") continue;     // el signo solo al principio
+        if (c < "0" || c > "9") return false;   // los dígitos van del "0" al "9"
+    }
+    return true;
+}
+
+function version3() {
+    let texto = prompt("Introduce un número entero:");
+    while (!esEntero(texto)) {
+        texto = prompt("Solo dígitos, por favor:");
+    }
+
+    let cifras = texto.startsWith("-") ? texto.length - 1 : texto.length;
+    document.write("<p>" + texto + " tiene " + cifras + " cifras</p>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) Convertir a texto y mirar su length\n2) Dividiendo entre 10 hasta llegar a 0\n3) Trabajando con el texto carácter a carácter", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

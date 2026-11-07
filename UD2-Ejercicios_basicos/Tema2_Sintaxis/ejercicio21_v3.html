@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 21 · Versión 3</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 21: Calculadora con botones
+  Enunciado: Calculadora con botones 0-9, + - * /, = y C. Cada pulsación muestra en un alert lo que llevamos ("34", "34 +", "34 + 7", "34 + 7 = 41"). Operación sin primer número o = sin operación completa: no hace nada. C reinicia.
+-->
+<div class="info">
+<h1>Ejercicio 21 · Versión 3 – Calculadora con botones</h1>
+<p>Calculadora con botones 0-9, + - * /, = y C. Cada pulsación muestra en un alert lo que llevamos ("34", "34 +", "34 + 7", "34 + 7 = 41"). Operación sin primer número o = sin operación completa: no hace nada. C reinicia.</p>
+<p><b>Qué se usa:</b></p><ul><li>variables globales (fuera de las funciones) para recordar el estado: num1, op, num2</li><li>concatenar dígitos como TEXTO ("3" + "4" = "34")</li><li>parseFloat() solo al calcular</li><li>return para salir sin hacer nada</li><li>onclick="funcion('valor')" pasando parámetros</li><li>switch para la operación</li><li>generar botones con document.write en un bucle</li></ul>
+</div>
+<p><b>Versión 3:</b> Botones generados con document.write en un bucle</p>
+<hr>
+<script>
+// Las teclas en el orden en que aparecen (por filas de 4)
+var teclas = ["1", "2", "3", "+",
+              "4", "5", "6", "-",
+              "7", "8", "9", "*",
+              "0", "=", "/", "C"];
+
+// Generamos la tabla de botones con un bucle (esto se ejecuta mientras carga la página,
+// por eso aquí SÍ podemos usar document.write)
+document.write("<table>");
+for (var i = 0; i < teclas.length; i++) {
+    if (i % 4 == 0) document.write("<tr>");            // cada 4 teclas, fila nueva
+    var t = teclas[i];
+    var ancho = (t == "=") ? " colspan='2'" : "";       // el = ocupa 2 celdas
+    document.write("<td" + ancho + "><button style='width:100%; height:50px; min-width:120px' " +
+                   "onclick=\"pulsar('" + t + "')\">" + t + "</button></td>");
+    if (t == "/") document.write("</tr><tr>");          // después del / va la C sola
+}
+document.write("</tr></table>");
+
+var primero = "";
+var operador = "";
+var segundo = "";
+
+function pulsar(t) {
+    var esDigito = (t >= "0" && t <= "9");
+    var esOperacion = (t == "+" || t == "-" || t == "*" || t == "/");
+
+    if (esDigito) {
+        if (operador == "") {
+            primero += t;
+            alert(primero);
+        } else {
+            segundo += t;
+            alert(primero + " " + operador + " " + segundo);
+        }
+    } else if (esOperacion) {
+        if (primero != "" && segundo == "") {
+            operador = t;
+            alert(primero + " " + operador);
+        }
+    } else if (t == "=") {
+        if (primero != "" && operador != "" && segundo != "") {
+            var a = parseFloat(primero);
+            var b = parseFloat(segundo);
+            var r;
+            switch (operador) {
+                case "+": r = a + b; break;
+                case "-": r = a - b; break;
+                case "*": r = a * b; break;
+                case "/": r = (b == 0) ? "Error: división entre 0" : a / b; break;
+            }
+            alert(primero + " " + operador + " " + segundo + " = " + r);
+            primero = ""; operador = ""; segundo = "";
+        }
+    } else if (t == "C") {
+        primero = ""; operador = ""; segundo = "";
+        alert("Calculadora reiniciada");
+    }
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

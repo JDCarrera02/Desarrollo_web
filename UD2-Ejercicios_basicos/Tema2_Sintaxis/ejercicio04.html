@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 4</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 4: Calculadora con if y con switch
+  Enunciado: Con dos variables numéricas ya definidas, pregunta la operación y escribe el resultado mostrando toda la operación. Hazlo con if y luego con switch.
+-->
+<div class="info">
+<h1>Ejercicio 4 – Calculadora con if y con switch</h1>
+<p>Con dos variables numéricas ya definidas, pregunta la operación y escribe el resultado mostrando toda la operación. Hazlo con if y luego con switch.</p>
+<p><b>Qué se usa:</b></p><ul><li>operadores aritméticos + - * / %</li><li>if / else if / else</li><li>switch con varios case para lo mismo</li><li>break y default</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: Con if / else if
+// ==============================================================
+function version1() {
+    var a = 12;
+    var b = 4;
+    var op = prompt("Tenemos " + a + " y " + b + ". ¿Qué operación quieres? (+, -, *, /)");
+
+    if (op == "+") {
+        document.write("<p>" + a + " + " + b + " = " + (a + b) + "</p>");
+    } else if (op == "-") {
+        document.write("<p>" + a + " - " + b + " = " + (a - b) + "</p>");
+    } else if (op == "*") {
+        document.write("<p>" + a + " * " + b + " = " + (a * b) + "</p>");
+    } else if (op == "/") {
+        document.write("<p>" + a + " / " + b + " = " + (a / b) + "</p>");
+    } else {
+        document.write("<p>Operación no válida</p>");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 2: Con switch
+// ==============================================================
+function version2() {
+    let a = 12;
+    let b = 4;
+    let op = prompt(`Tenemos ${a} y ${b}. ¿Qué operación quieres? (+, -, *, /)`);
+    let resultado;
+
+    // switch compara op con cada case (con ===)
+    switch (op) {
+        case "+": resultado = a + b; break;
+        case "-": resultado = a - b; break;
+        case "*": resultado = a * b; break;
+        case "/": resultado = a / b; break;
+        default:  resultado = null;          // ninguna coincide
+    }
+
+    if (resultado === null) {
+        document.write("<p>Operación no válida</p>");
+    } else {
+        document.write(`<p>${a} ${op} ${b} = ${resultado}</p>`);
+    }
+}
+
+// ==============================================================
+// VERSIÓN 3: switch que acepta símbolo o palabra y controla dividir entre 0
+// ==============================================================
+function version3() {
+    const a = 12;
+    const b = 0;               // pon 0 para ver el control de división
+    let op = prompt("Números: " + a + " y " + b + "\nEscribe la operación (+ o suma, - o resta, * o multiplica, / o divide)");
+    op = op.toLowerCase();     // así da igual "SUMA" que "suma"
+    let texto;
+
+    switch (op) {
+        case "+":
+        case "suma":           // varios case seguidos sin break = hacen lo mismo
+            texto = a + " + " + b + " = " + (a + b);
+            break;
+        case "-":
+        case "resta":
+            texto = a + " - " + b + " = " + (a - b);
+            break;
+        case "*":
+        case "multiplica":
+            texto = a + " * " + b + " = " + (a * b);
+            break;
+        case "/":
+        case "divide":
+            if (b == 0) {
+                texto = "No se puede dividir entre 0";
+            } else {
+                texto = a + " / " + b + " = " + (a / b);
+            }
+            break;
+        default:
+            texto = "Operación no válida";
+    }
+
+    document.write("<p>" + texto + "</p>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) Con if / else if\n2) Con switch\n3) switch que acepta símbolo o palabra y controla dividir entre 0", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

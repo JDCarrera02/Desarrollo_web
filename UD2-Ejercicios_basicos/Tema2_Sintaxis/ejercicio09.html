@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 9</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 9: ¿Personaje de Star Wars?
+  Enunciado: Si el usuario escribe C3PO, R2, Vader o Luck, responde que son personajes de Star Wars; si no, que no lo son. Da igual mayúsculas o minúsculas.
+-->
+<div class="info">
+<h1>Ejercicio 9 – ¿Personaje de Star Wars?</h1>
+<p>Si el usuario escribe C3PO, R2, Vader o Luck, responde que son personajes de Star Wars; si no, que no lo son. Da igual mayúsculas o minúsculas.</p>
+<p><b>Qué se usa:</b></p><ul><li>toUpperCase() para no depender de mayúsculas/minúsculas</li><li>operador lógico || (o)</li><li>switch con varios case</li><li>array.includes()</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: if con || y toUpperCase()
+// ==============================================================
+function version1() {
+    // Pasamos a mayúsculas para comparar siempre igual ("vader", "Vader", "VADER" → "VADER")
+    var p = prompt("Escribe un personaje:").toUpperCase();
+
+    if (p == "C3PO" || p == "R2" || p == "VADER" || p == "LUCK") {
+        document.write("<p>" + p + " es un personaje de Star Wars</p>");
+    } else {
+        document.write("<p>" + p + " NO es un personaje de la película</p>");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 2: switch con varios case seguidos
+// ==============================================================
+function version2() {
+    let p = prompt("Escribe un personaje:");
+
+    switch (p.toUpperCase()) {
+        case "C3PO":
+        case "R2":
+        case "VADER":
+        case "LUCK":                     // todos caen aquí (no hay break entre ellos)
+            document.write(`<p>${p} es un personaje de Star Wars</p>`);
+            break;
+        default:
+            document.write(`<p>${p} no es un personaje de la película</p>`);
+    }
+}
+
+// ==============================================================
+// VERSIÓN 3: Array de personajes + includes() y control de Cancelar
+// ==============================================================
+function version3() {
+    const PERSONAJES = ["C3PO", "R2", "VADER", "LUCK", "LUKE"];   // añadimos LUKE por si acaso
+
+    // Si pulsa Cancelar prompt da null y null.toUpperCase() daría error.
+    // (prompt(...) || "") → si es null usamos "" en su lugar
+    let p = (prompt("Escribe un personaje:") || "").trim().toUpperCase();
+
+    if (PERSONAJES.includes(p)) {        // includes = ¿está dentro del array?
+        document.write("<p>Sí, " + p + " sale en Star Wars</p>");
+    } else {
+        document.write("<p>No, " + p + " no sale en Star Wars</p>");
+    }
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) if con || y toUpperCase()\n2) switch con varios case seguidos\n3) Array de personajes + includes() y control de Cancelar", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

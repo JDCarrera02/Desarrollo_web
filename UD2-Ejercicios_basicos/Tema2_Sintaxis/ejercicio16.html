@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 16</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 16: Rectángulo con borde y relleno
+  Enunciado: Pide alto, ancho, carácter de borde y de relleno, y dibuja el rectángulo. Usa <pre> o <tt>.
+-->
+<div class="info">
+<h1>Ejercicio 16 – Rectángulo con borde y relleno</h1>
+<p>Pide alto, ancho, carácter de borde y de relleno, y dibuja el rectángulo. Usa &lt;pre&gt; o &lt;tt&gt;.</p>
+<p><b>Qué se usa:</b></p><ul><li>&lt;pre&gt; respeta espacios y saltos de línea \n</li><li>for anidados (filas y columnas)</li><li>condición de borde: primera/última fila o primera/última columna</li><li>repeat()</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: for anidados con la condición de borde
+// ==============================================================
+function version1() {
+    var alto = parseInt(prompt("Alto:"));
+    var ancho = parseInt(prompt("Ancho:"));
+    var borde = prompt("Carácter del borde:");
+    var relleno = prompt("Carácter del relleno:");
+
+    document.write("<pre>");
+    for (var i = 0; i < alto; i++) {           // filas
+        for (var j = 0; j < ancho; j++) {      // columnas
+            // Es borde si estamos en la primera/última fila o en la primera/última columna
+            if (i == 0 || i == alto - 1 || j == 0 || j == ancho - 1) {
+                document.write(borde);
+            } else {
+                document.write(relleno);
+            }
+        }
+        document.write("\n");                  // dentro de <pre>, \n es un salto de línea
+    }
+    document.write("</pre>");
+}
+
+// ==============================================================
+// VERSIÓN 2: Construyendo las líneas con repeat()
+// ==============================================================
+function version2() {
+    let alto = parseInt(prompt("Alto (mínimo 2):"));
+    let ancho = parseInt(prompt("Ancho (mínimo 2):"));
+    let borde = prompt("Carácter del borde:");
+    let relleno = prompt("Carácter del relleno:");
+
+    // Solo hay dos tipos de línea: la de borde y la del medio
+    let lineaBorde = borde.repeat(ancho);
+    let lineaMedio = borde + relleno.repeat(ancho - 2) + borde;
+
+    let dibujo = lineaBorde + "\n";
+    for (let i = 0; i < alto - 2; i++) {
+        dibujo += lineaMedio + "\n";
+    }
+    dibujo += lineaBorde;
+
+    document.write("<pre>" + dibujo + "</pre>");
+}
+
+// ==============================================================
+// VERSIÓN 3: Validando datos y usando el ternario
+// ==============================================================
+function pedirTamano(mensaje) {
+    let n;
+    do {
+        n = parseInt(prompt(mensaje));
+    } while (isNaN(n) || n < 2);
+    return n;
+}
+
+function pedirCaracter(mensaje) {
+    let c;
+    do {
+        c = prompt(mensaje);
+    } while (c === null || c.length !== 1);    // exactamente 1 carácter
+    return c;
+}
+
+function version3() {
+    const alto = pedirTamano("Alto (mínimo 2):");
+    const ancho = pedirTamano("Ancho (mínimo 2):");
+    const borde = pedirCaracter("Carácter del borde:");
+    const relleno = pedirCaracter("Carácter del relleno:");
+
+    let dibujo = "";
+    let i = 0;
+    while (i < alto) {
+        let j = 0;
+        while (j < ancho) {
+            let esBorde = (i === 0 || i === alto - 1 || j === 0 || j === ancho - 1);
+            dibujo += esBorde ? borde : relleno;
+            j++;
+        }
+        dibujo += "\n";
+        i++;
+    }
+    document.write("<pre>" + dibujo + "</pre>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) for anidados con la condición de borde\n2) Construyendo las líneas con repeat()\n3) Validando datos y usando el ternario", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

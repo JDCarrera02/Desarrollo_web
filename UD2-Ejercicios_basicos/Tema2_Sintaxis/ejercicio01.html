@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 1</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 1: Pedir nombre, edad y profesión
+  Enunciado: Pide al usuario su nombre, edad y profesión, guárdalos en variables e imprímelos en la página con document.write().
+-->
+<div class="info">
+<h1>Ejercicio 1 – Pedir nombre, edad y profesión</h1>
+<p>Pide al usuario su nombre, edad y profesión, guárdalos en variables e imprímelos en la página con document.write().</p>
+<p><b>Qué se usa:</b></p><ul><li>prompt() devuelve SIEMPRE texto (o null si se pulsa Cancelar)</li><li>variables var / let</li><li>concatenar con +</li><li>plantillas `${...}`</li><li>document.write() con etiquetas HTML dentro</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: Lo mínimo: prompt + concatenar con +
+// ==============================================================
+function version1() {
+    // 1. Pedimos los datos. prompt() muestra una caja y devuelve lo que escribe el usuario
+    var nombre = prompt("¿Cómo te llamas?");
+    var edad = prompt("¿Cuántos años tienes?");
+    var profesion = prompt("¿A qué te dedicas?");
+
+    // 2. Los escribimos en la página. Con + pegamos texto y variables
+    document.write("<p>Nombre: " + nombre + "</p>");
+    document.write("<p>Edad: " + edad + "</p>");
+    document.write("<p>Profesión: " + profesion + "</p>");
+}
+
+// ==============================================================
+// VERSIÓN 2: Plantilla de texto con comillas invertidas (backticks)
+// ==============================================================
+function version2() {
+    let nombre = prompt("¿Cómo te llamas?");
+    let edad = prompt("¿Cuántos años tienes?");
+    let profesion = prompt("¿A qué te dedicas?");
+
+    // Con `...` (backticks) podemos meter variables con ${variable}
+    // sin tener que abrir y cerrar comillas ni usar +
+    document.write(`<p>Hola, me llamo <b>${nombre}</b>, tengo <b>${edad}</b> años
+                    y trabajo de <b>${profesion}</b>.</p>`);
+}
+
+// ==============================================================
+// VERSIÓN 3: Validando los datos y mostrándolos en una tabla
+// ==============================================================
+function version3() {
+    // do...while: se ejecuta al menos una vez y repite MIENTRAS la condición sea cierta
+    let nombre;
+    do {
+        nombre = prompt("¿Cómo te llamas?");
+    } while (nombre === null || nombre.trim() === "");   // null = pulsó Cancelar; trim() quita espacios
+
+    // parseInt() convierte el texto a número entero. Si no puede, da NaN
+    let edad;
+    do {
+        edad = parseInt(prompt("¿Cuántos años tienes?"));
+    } while (isNaN(edad));                                 // isNaN = "no es un número"
+
+    let profesion = prompt("¿A qué te dedicas?");
+
+    // Escribimos una tabla HTML con los datos
+    document.write("<table border='1'>");
+    document.write("<tr><th>Nombre</th><th>Edad</th><th>Profesión</th></tr>");
+    document.write("<tr><td>" + nombre + "</td><td>" + edad + "</td><td>" + profesion + "</td></tr>");
+    document.write("</table>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) Lo mínimo: prompt + concatenar con +\n2) Plantilla de texto con comillas invertidas (backticks)\n3) Validando los datos y mostrándolos en una tabla", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

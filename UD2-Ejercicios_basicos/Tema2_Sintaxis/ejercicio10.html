@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 10</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 10: Precio del billete de autobús
+  Enunciado: Pide nombre, edad y día. 15% de descuento si tiene 18-26 años o más de 60; 5% más si viaja miércoles o viernes. Billete: 12,5 € sin IVA. Muestra el motivo del descuento y el precio con y sin IVA.
+-->
+<div class="info">
+<h1>Ejercicio 10 – Precio del billete de autobús</h1>
+<p>Pide nombre, edad y día. 15% de descuento si tiene 18-26 años o más de 60; 5% más si viaja miércoles o viernes. Billete: 12,5 € sin IVA. Muestra el motivo del descuento y el precio con y sin IVA.</p>
+<p><b>Qué se usa:</b></p><ul><li>constantes const</li><li>&amp;&amp; (y) y || (o) combinados con paréntesis</li><li>acumular descuentos y motivos</li><li>toLowerCase() para el día</li><li>toFixed(2) para mostrar 2 decimales</li><li>switch para el día</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: if sencillos y acumulando descuento y motivo
+// ==============================================================
+function version1() {
+    var PRECIO = 12.5;     // sin IVA
+    var IVA = 0.21;        // 21 % (cámbialo si en clase usasteis otro)
+
+    var nombre = prompt("Nombre:");
+    var edad = parseInt(prompt("Edad:"));
+    var dia = prompt("¿Qué día de la semana viajas?").toLowerCase();
+
+    var descuento = 0;     // en %
+    var motivo = "";
+
+    // Paréntesis importantes: (entre 18 y 26)  O  (mayor de 60)
+    if ((edad >= 18 && edad <= 26) || edad > 60) {
+        descuento += 15;
+        motivo += "15% por edad. ";
+    }
+    if (dia == "miercoles" || dia == "miércoles" || dia == "viernes") {
+        descuento += 5;
+        motivo += "5% por viajar en " + dia + ". ";
+    }
+    if (motivo == "") motivo = "Sin descuento.";
+
+    var sinIva = PRECIO - PRECIO * descuento / 100;
+    var conIva = sinIva + sinIva * IVA;
+
+    document.write("<h3>Billete de " + nombre + "</h3>");
+    document.write("<p>Descuento total: " + descuento + "% → " + motivo + "</p>");
+    document.write("<p>Precio SIN IVA: " + sinIva.toFixed(2) + " €</p>");
+    document.write("<p>Precio CON IVA: " + conIva.toFixed(2) + " €</p>");
+}
+
+// ==============================================================
+// VERSIÓN 2: Booleanos + switch para el día y resumen en tabla
+// ==============================================================
+function version2() {
+    const PRECIO = 12.5;
+    const IVA = 0.21;
+
+    let nombre = prompt("Nombre:");
+    let edad = Number(prompt("Edad:"));
+    let dia = prompt("Día de la semana:").toLowerCase();
+
+    // Guardamos cada condición en una variable booleana (true/false): se lee mejor
+    let jovenOMayor = (edad >= 18 && edad <= 26) || edad > 60;
+    let diaDescuento;
+    switch (dia) {
+        case "miercoles":
+        case "miércoles":
+        case "viernes":
+            diaDescuento = true;
+            break;
+        default:
+            diaDescuento = false;
+    }
+
+    let porcentaje = 0;
+    let motivos = "";
+    if (jovenOMayor)  { porcentaje += 15; motivos += "Edad (15%) "; }
+    if (diaDescuento) { porcentaje += 5;  motivos += "Día " + dia + " (5%)"; }
+    if (porcentaje == 0) motivos = "Ninguno";
+
+    let sinIva = PRECIO * (1 - porcentaje / 100);
+    let conIva = sinIva * (1 + IVA);
+
+    document.write(`
+        <table border="1">
+            <tr><th>Viajero</th><td>${nombre} (${edad} años)</td></tr>
+            <tr><th>Descuentos</th><td>${motivos}</td></tr>
+            <tr><th>Sin IVA</th><td>${sinIva.toFixed(2)} €</td></tr>
+            <tr><th>Con IVA</th><td>${conIva.toFixed(2)} €</td></tr>
+        </table>`);
+}
+
+// ==============================================================
+// VERSIÓN 3: Funciones para cada descuento
+// ==============================================================
+const PRECIO_BASE = 12.5;
+const IVA = 0.21;
+
+// Devuelve el % de descuento por edad
+function descuentoEdad(edad) {
+    if ((edad >= 18 && edad <= 26) || edad > 60) return 15;
+    return 0;
+}
+
+// Devuelve el % de descuento por día
+function descuentoDia(dia) {
+    dia = dia.toLowerCase();
+    if (dia == "miércoles" || dia == "miercoles" || dia == "viernes") return 5;
+    return 0;
+}
+
+function version3() {
+    let nombre = prompt("Nombre:");
+    let edad;
+    do {
+        edad = parseInt(prompt("Edad:"));
+    } while (isNaN(edad));
+    let dia = prompt("Día de la semana:");
+
+    let dEdad = descuentoEdad(edad);
+    let dDia = descuentoDia(dia);
+    let total = dEdad + dDia;
+
+    let sinIva = PRECIO_BASE - PRECIO_BASE * total / 100;
+    let conIva = sinIva * (1 + IVA);
+
+    document.write("<h3>Resumen para " + nombre + "</h3><ul>");
+    document.write("<li>Precio base: " + PRECIO_BASE.toFixed(2) + " € (sin IVA)</li>");
+    if (dEdad > 0) document.write("<li>-" + dEdad + "% por tener " + edad + " años</li>");
+    if (dDia > 0)  document.write("<li>-" + dDia + "% por viajar en " + dia + "</li>");
+    if (total == 0) document.write("<li>No tiene descuentos</li>");
+    document.write("<li>Total SIN IVA: " + sinIva.toFixed(2) + " €</li>");
+    document.write("<li>Total CON IVA (21%): " + conIva.toFixed(2) + " €</li></ul>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) if sencillos y acumulando descuento y motivo\n2) Booleanos + switch para el día y resumen en tabla\n3) Funciones para cada descuento", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

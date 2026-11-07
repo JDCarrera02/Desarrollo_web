@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 15</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 15: Ordenar 4 palabras
+  Enunciado: Pide 4 palabras y muéstralas ordenadas alfabéticamente.
+-->
+<div class="info">
+<h1>Ejercicio 15 – Ordenar 4 palabras</h1>
+<p>Pide 4 palabras y muéstralas ordenadas alfabéticamente.</p>
+<p><b>Qué se usa:</b></p><ul><li>array [] y push()</li><li>for para pedir varias veces</li><li>sort() (ojo: mayúsculas van antes que minúsculas)</li><li>localeCompare() para ordenar bien acentos y mayúsculas</li><li>intercambiar dos variables con una auxiliar (burbuja)</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: Array + push() + sort()
+// ==============================================================
+function version1() {
+    var palabras = [];                         // array vacío
+
+    for (var i = 1; i <= 4; i++) {
+        palabras.push(prompt("Palabra " + i + ":"));   // push añade al final
+    }
+
+    palabras.sort();                           // ordena alfabéticamente
+    // OJO: sort() pone "Zorro" antes que "abeja" (las mayúsculas van primero)
+
+    document.write("<p>Ordenadas: " + palabras.join(", ") + "</p>");   // join une con ", "
+}
+
+// ==============================================================
+// VERSIÓN 2: sort() con localeCompare (respeta acentos y mayúsculas) y lista <ol>
+// ==============================================================
+function version2() {
+    let palabras = [];
+    for (let i = 0; i < 4; i++) {
+        palabras[i] = prompt(`Palabra ${i + 1}:`);
+    }
+
+    // localeCompare compara como en un diccionario: "árbol" va junto a "arco"
+    palabras.sort(function (a, b) {
+        return a.localeCompare(b);
+    });
+
+    document.write("<ol>");
+    for (let i = 0; i < palabras.length; i++) {
+        document.write("<li>" + palabras[i] + "</li>");
+    }
+    document.write("</ol>");
+}
+
+// ==============================================================
+// VERSIÓN 3: Ordenación manual (método de la burbuja)
+// ==============================================================
+function version3() {
+    let p = [];
+    for (let i = 0; i < 4; i++) p.push(prompt("Palabra " + (i + 1) + ":"));
+
+    // Burbuja: comparamos cada pareja de vecinas y si están mal, las cambiamos.
+    // Repetimos tantas pasadas como elementos.
+    for (let pasada = 0; pasada < p.length - 1; pasada++) {
+        for (let j = 0; j < p.length - 1 - pasada; j++) {
+            // Los textos se comparan con > y < (ojo: "árbol" > "zorro" porque la á va después de la z)
+            if (p[j].toLowerCase() > p[j + 1].toLowerCase()) {
+                let aux = p[j];          // intercambio usando una variable auxiliar
+                p[j] = p[j + 1];
+                p[j + 1] = aux;
+            }
+        }
+    }
+
+    document.write("<p>" + p.join(" - ") + "</p>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) Array + push() + sort()\n2) sort() con localeCompare (respeta acentos y mayúsculas) y lista <ol>\n3) Ordenación manual (método de la burbuja)", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 18</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 18: Impares sin usar %
+  Enunciado: Dado un número, muestra todos los impares hasta él, sin usar el operador módulo (%).
+-->
+<div class="info">
+<h1>Ejercicio 18 – Impares sin usar %</h1>
+<p>Dado un número, muestra todos los impares hasta él, sin usar el operador módulo (%).</p>
+<p><b>Qué se usa:</b></p><ul><li>for que empieza en 1 y suma de 2 en 2</li><li>variable booleana que alterna con !</li><li>Math.floor(i / 2) * 2 == i → es par</li><li>Number.isInteger(i / 2)</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: for de 2 en 2 (la más sencilla)
+// ==============================================================
+function version1() {
+    var n = parseInt(prompt("Introduce un número:"));
+
+    // Empezando en 1 y sumando 2 siempre caemos en impares: 1, 3, 5, 7...
+    for (var i = 1; i <= n; i += 2) {
+        document.write(i + " ");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 2: Interruptor booleano que se alterna
+// ==============================================================
+function version2() {
+    let n = parseInt(prompt("Introduce un número:"));
+    let esImpar = true;          // el 1 es impar
+
+    for (let i = 1; i <= n; i++) {
+        if (esImpar) document.write(i + " ");
+        esImpar = !esImpar;      // ! cambia true↔false: impar, par, impar, par...
+    }
+}
+
+// ==============================================================
+// VERSIÓN 3: Comprobando con división entera (Math.floor)
+// ==============================================================
+function version3() {
+    let n;
+    do {
+        n = parseInt(prompt("Introduce un número positivo:"));
+    } while (isNaN(n) || n < 1);
+
+    let impares = "";
+    let i = 1;
+    while (i <= n) {
+        // Si al dividir entre 2 y quitar decimales, y volver a multiplicar, NO sale el mismo → impar
+        // 7 / 2 = 3.5 → floor = 3 → 3 * 2 = 6 ≠ 7  → impar
+        if (Math.floor(i / 2) * 2 != i) {
+            impares += i + (i + 2 <= n ? ", " : "");
+        }
+        i++;
+    }
+    document.write("<p>Impares hasta " + n + ": " + impares + "</p>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) for de 2 en 2 (la más sencilla)\n2) Interruptor booleano que se alterna\n3) Comprobando con división entera (Math.floor)", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

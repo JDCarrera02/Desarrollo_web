@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 2</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 2: Par o impar
+  Enunciado: Pide un número y muestra en un párrafo si es par o impar.
+-->
+<div class="info">
+<h1>Ejercicio 2 – Par o impar</h1>
+<p>Pide un número y muestra en un párrafo si es par o impar.</p>
+<p><b>Qué se usa:</b></p><ul><li>parseInt() / Number() para pasar el texto a número</li><li>operador módulo % (resto de la división)</li><li>if / else</li><li>operador ternario  condición ? a : b</li><li>switch</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: if / else con el operador %
+// ==============================================================
+function version1() {
+    var numero = parseInt(prompt("Introduce un número entero:"));
+
+    // Un número es par si al dividirlo entre 2 el resto es 0
+    if (numero % 2 == 0) {
+        document.write("<p>El número " + numero + " es PAR</p>");
+    } else {
+        document.write("<p>El número " + numero + " es IMPAR</p>");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 2: Operador ternario (if en una línea)
+// ==============================================================
+function version2() {
+    let numero = Number(prompt("Introduce un número entero:"));
+
+    // condición ? valorSiCierto : valorSiFalso
+    let tipo = (numero % 2 === 0) ? "par" : "impar";
+
+    document.write(`<p>El número ${numero} es ${tipo}</p>`);
+}
+
+// ==============================================================
+// VERSIÓN 3: Validando que sea entero y usando switch
+// ==============================================================
+function version3() {
+    let numero;
+    // Repetimos hasta que sea un número entero (Number.isInteger)
+    do {
+        numero = Number(prompt("Introduce un número ENTERO:"));
+    } while (!Number.isInteger(numero));
+
+    // Math.abs quita el signo: -3 % 2 da -1, con abs da 1
+    switch (Math.abs(numero % 2)) {
+        case 0:
+            document.write("<p>" + numero + " es par</p>");
+            break;                     // ¡sin break seguiría al siguiente case!
+        case 1:
+            document.write("<p>" + numero + " es impar</p>");
+            break;
+    }
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) if / else con el operador %\n2) Operador ternario (if en una línea)\n3) Validando que sea entero y usando switch", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

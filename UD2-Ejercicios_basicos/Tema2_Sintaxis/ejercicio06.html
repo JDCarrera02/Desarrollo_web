@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 6</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 6: Factorial
+  Enunciado: Pide un número y calcula su factorial (producto de todos los enteros desde 1 hasta ese número).
+-->
+<div class="info">
+<h1>Ejercicio 6 – Factorial</h1>
+<p>Pide un número y calcula su factorial (producto de todos los enteros desde 1 hasta ese número).</p>
+<p><b>Qué se usa:</b></p><ul><li>acumulador que empieza en 1 (si empezara en 0 todo daría 0)</li><li>for / while</li><li>operador *=</li><li>función recursiva (se llama a sí misma)</li><li>0! = 1</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: Bucle for con acumulador
+// ==============================================================
+function version1() {
+    var n = parseInt(prompt("Número para calcular su factorial:"));
+    var factorial = 1;                  // empieza en 1, NO en 0
+
+    for (var i = 1; i <= n; i++) {
+        factorial = factorial * i;      // 1*1, 1*2, 2*3, 6*4, 24*5...
+    }
+
+    document.write("<p>" + n + "! = " + factorial + "</p>");
+}
+
+// ==============================================================
+// VERSIÓN 2: while hacia atrás mostrando la operación completa
+// ==============================================================
+function version2() {
+    let n = parseInt(prompt("Número para calcular su factorial:"));
+
+    if (isNaN(n) || n < 0) {
+        document.write("<p>Tiene que ser un número entero positivo</p>");
+        return;                          // salimos de la función
+    }
+
+    let factorial = 1;
+    let operacion = "";                  // aquí guardamos "5 x 4 x 3 x 2 x 1"
+    let i = n;
+    while (i > 0) {
+        factorial *= i;                  // igual que factorial = factorial * i
+        operacion += i;
+        if (i > 1) operacion += " x ";
+        i--;
+    }
+    if (n == 0) operacion = "1";         // 0! vale 1 por definición
+
+    document.write(`<p>${n}! = ${operacion} = ${factorial}</p>`);
+}
+
+// ==============================================================
+// VERSIÓN 3: Función recursiva
+// ==============================================================
+// n! = n * (n-1)!   y   0! = 1! = 1  (caso base, si no la recursión no acabaría nunca)
+function factorial(n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}
+
+function version3() {
+    let n;
+    do {
+        n = parseInt(prompt("Introduce un entero mayor o igual que 0:"));
+    } while (isNaN(n) || n < 0);
+
+    document.write("<p>El factorial de " + n + " es " + factorial(n) + "</p>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) Bucle for con acumulador\n2) while hacia atrás mostrando la operación completa\n3) Función recursiva", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

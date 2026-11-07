@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 21 · Versión 1</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 21: Calculadora con botones
+  Enunciado: Calculadora con botones 0-9, + - * /, = y C. Cada pulsación muestra en un alert lo que llevamos ("34", "34 +", "34 + 7", "34 + 7 = 41"). Operación sin primer número o = sin operación completa: no hace nada. C reinicia.
+-->
+<div class="info">
+<h1>Ejercicio 21 · Versión 1 – Calculadora con botones</h1>
+<p>Calculadora con botones 0-9, + - * /, = y C. Cada pulsación muestra en un alert lo que llevamos ("34", "34 +", "34 + 7", "34 + 7 = 41"). Operación sin primer número o = sin operación completa: no hace nada. C reinicia.</p>
+<p><b>Qué se usa:</b></p><ul><li>variables globales (fuera de las funciones) para recordar el estado: num1, op, num2</li><li>concatenar dígitos como TEXTO ("3" + "4" = "34")</li><li>parseFloat() solo al calcular</li><li>return para salir sin hacer nada</li><li>onclick="funcion('valor')" pasando parámetros</li><li>switch para la operación</li><li>generar botones con document.write en un bucle</li></ul>
+</div>
+<p><b>Versión 1:</b> Una función por tipo de botón</p>
+<hr>
+<style>
+    .calc { display: grid; grid-template-columns: repeat(4, 140px); gap: 10px; }
+    .calc button { height: 50px; font-size: 16px; }
+    .doble { grid-column: span 2; }          /* el botón = ocupa dos columnas */
+</style>
+
+<div class="calc">
+    <button onclick="numero('1')">1</button>
+    <button onclick="numero('2')">2</button>
+    <button onclick="numero('3')">3</button>
+    <button onclick="operacion('+')">+</button>
+    <button onclick="numero('4')">4</button>
+    <button onclick="numero('5')">5</button>
+    <button onclick="numero('6')">6</button>
+    <button onclick="operacion('-')">-</button>
+    <button onclick="numero('7')">7</button>
+    <button onclick="numero('8')">8</button>
+    <button onclick="numero('9')">9</button>
+    <button onclick="operacion('*')">*</button>
+    <button onclick="numero('0')">0</button>
+    <button class="doble" onclick="igual()">=</button>
+    <button onclick="operacion('/')">/</button>
+    <button onclick="borrar()">C</button>
+</div>
+
+<script>
+// Variables GLOBALES: guardan el estado entre una pulsación y otra
+var num1 = "";      // primer número (como texto)
+var op = "";        // operación
+var num2 = "";      // segundo número (como texto)
+
+function numero(digito) {
+    if (op == "") {                     // aún no hay operación → estamos escribiendo el primero
+        num1 = num1 + digito;           // "3" + "4" = "34" (son textos, se pegan)
+        alert(num1);
+    } else {                            // ya hay operación → estamos escribiendo el segundo
+        num2 = num2 + digito;
+        alert(num1 + " " + op + " " + num2);
+    }
+}
+
+function operacion(o) {
+    if (num1 == "") return;             // sin primer número no hace nada
+    if (num2 != "") return;             // si ya hay segundo número, tampoco
+    op = o;
+    alert(num1 + " " + op);
+}
+
+function igual() {
+    if (num1 == "" || op == "" || num2 == "") return;   // operación incompleta → nada
+
+    var a = parseFloat(num1);           // ahora sí, pasamos a número para calcular
+    var b = parseFloat(num2);
+    var r;
+    if (op == "+") r = a + b;
+    else if (op == "-") r = a - b;
+    else if (op == "*") r = a * b;
+    else if (op == "/") r = a / b;
+
+    alert(num1 + " " + op + " " + num2 + " = " + r);
+    borrar();                           // empezamos de nuevo
+}
+
+// La llamamos borrar() y no reset() para no confundirla con form.reset()
+function borrar() {
+    num1 = "";
+    op = "";
+    num2 = "";
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

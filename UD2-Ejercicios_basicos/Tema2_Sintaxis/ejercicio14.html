@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 14</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 14: Escalera descendente con asteriscos
+  Enunciado: Pide un número y muestra: para 5 → 55555 / *4444 / **333 / ***22 / ****1
+-->
+<div class="info">
+<h1>Ejercicio 14 – Escalera descendente con asteriscos</h1>
+<p>Pide un número y muestra: para 5 → 55555 / *4444 / **333 / ***22 / ****1</p>
+<p><b>Qué se usa:</b></p><ul><li>en la fila i: i asteriscos + el número (n - i) repetido (n - i) veces</li><li>for anidados</li><li>repeat()</li><li>bucle que cuenta hacia atrás (i--)</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: for anidados
+// ==============================================================
+function version1() {
+    var n = parseInt(prompt("Introduce un número:"));
+
+    for (var i = 0; i < n; i++) {             // i = asteriscos de la fila (0, 1, 2...)
+        var num = n - i;                      // número de la fila (5, 4, 3...)
+        for (var k = 0; k < i; k++)   document.write("*");
+        for (var k = 0; k < num; k++) document.write(num);
+        document.write("<br>");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 2: repeat() con un for que cuenta hacia atrás
+// ==============================================================
+function version2() {
+    let n = parseInt(prompt("Introduce un número:"));
+
+    for (let num = n; num >= 1; num--) {      // 5, 4, 3, 2, 1
+        let asteriscos = "*".repeat(n - num); // 0, 1, 2, 3, 4
+        document.write(asteriscos + String(num).repeat(num) + "<br>");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 3: while acumulando en una variable
+// ==============================================================
+function version3() {
+    let n;
+    do {
+        n = parseInt(prompt("Introduce un número mayor que 0:"));
+    } while (isNaN(n) || n < 1);
+
+    let salida = "";
+    let num = n;
+    while (num > 0) {
+        let linea = "";
+        let k = 0;
+        while (k < n - num) { linea += "*"; k++; }
+        k = 0;
+        while (k < num)     { linea += num; k++; }
+        salida += linea + "<br>";
+        num--;
+    }
+    document.write("<tt>" + salida + "</tt>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) for anidados\n2) repeat() con un for que cuenta hacia atrás\n3) while acumulando en una variable", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

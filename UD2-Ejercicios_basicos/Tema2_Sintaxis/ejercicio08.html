@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 8</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 8: Pirámide de números 1, 22, 333...
+  Enunciado: Genera una pirámide: 1 / 22 / 333 / 4444 / 55555.
+-->
+<div class="info">
+<h1>Ejercicio 8 – Pirámide de números 1, 22, 333...</h1>
+<p>Genera una pirámide: 1 / 22 / 333 / 4444 / 55555.</p>
+<p><b>Qué se usa:</b></p><ul><li>for anidados: el de fuera = filas, el de dentro = cuántas veces se repite</li><li>&lt;br&gt; para saltar de línea en la página</li><li>texto.repeat(n) (método de String)</li><li>acumular en una variable</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: Dos for anidados (5 filas fijas)
+// ==============================================================
+function version1() {
+    for (var i = 1; i <= 5; i++) {          // i = número de fila (y número que se escribe)
+        for (var j = 1; j <= i; j++) {      // escribimos el número i, i veces
+            document.write(i);
+        }
+        document.write("<br>");             // salto de línea al acabar la fila
+    }
+}
+
+// ==============================================================
+// VERSIÓN 2: Pidiendo la altura y usando repeat()
+// ==============================================================
+function version2() {
+    let altura = parseInt(prompt("¿Cuántas filas quieres?", "5"));
+
+    for (let i = 1; i <= altura; i++) {
+        // String(i) convierte el número a texto; repeat(i) lo repite i veces
+        document.write(String(i).repeat(i) + "<br>");
+    }
+}
+
+// ==============================================================
+// VERSIÓN 3: Con while acumulando todo en una variable
+// ==============================================================
+function version3() {
+    let altura = 5;
+    let resultado = "";
+    let fila = 1;
+
+    while (fila <= altura) {
+        let linea = "";
+        let veces = 0;
+        while (veces < fila) {
+            linea += fila;         // número + texto = texto: "", "1"... "22"...
+            veces++;
+        }
+        resultado += linea + "<br>";
+        fila++;
+    }
+
+    document.write(resultado);
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) Dos for anidados (5 filas fijas)\n2) Pidiendo la altura y usando repeat()\n3) Con while acumulando todo en una variable", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 17</title>
+<style>body{font-family:sans-serif; margin:20px} .info{background:#f3f3f3; padding:10px 15px; border-left:4px solid #888}</style>
+</head>
+<body>
+<!--
+  EJERCICIO 17: ¿Número, vocal, consonante, mayúscula u otro? (switch)
+  Enunciado: Dado un carácter, di si es número, vocal, consonante, si está en mayúsculas o si es otro. Usa switch case.
+-->
+<div class="info">
+<h1>Ejercicio 17 – ¿Número, vocal, consonante, mayúscula u otro? (switch)</h1>
+<p>Dado un carácter, di si es número, vocal, consonante, si está en mayúsculas o si es otro. Usa switch case.</p>
+<p><b>Qué se usa:</b></p><ul><li>switch (true) con condiciones en los case</li><li>case seguidos sin break para agrupar (las vocales)</li><li>comparar caracteres: c &gt;= "a" &amp;&amp; c &lt;= "z"</li><li>c === c.toUpperCase() para saber si está en mayúsculas</li><li>charCodeAt() da el código numérico del carácter</li></ul>
+</div>
+<hr>
+<script>
+// ==============================================================
+// VERSIÓN 1: switch(true): cada case es una condición
+// ==============================================================
+function version1() {
+    var c = prompt("Introduce un carácter:").charAt(0);   // nos quedamos con el primero
+    var tipo;
+
+    // switch(true) entra en el PRIMER case cuya condición sea true
+    switch (true) {
+        case (c >= "0" && c <= "9"):
+            tipo = "un número";
+            break;
+        case ("aeiouAEIOU".indexOf(c) != -1):             // indexOf da -1 si no lo encuentra
+            tipo = "una vocal";
+            break;
+        case ((c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c == "ñ" || c == "Ñ"):
+            tipo = "una consonante";
+            break;
+        default:
+            tipo = "otro carácter";
+    }
+
+    var mayus = "";
+    if (tipo == "una vocal" || tipo == "una consonante") {
+        mayus = (c == c.toUpperCase()) ? " en MAYÚSCULAS" : " en minúsculas";
+    }
+    document.write("<p>'" + c + "' es " + tipo + mayus + "</p>");
+}
+
+// ==============================================================
+// VERSIÓN 2: switch normal agrupando case (vocales y dígitos)
+// ==============================================================
+function version2() {
+    let c = prompt("Introduce un carácter:").charAt(0);
+    let tipo;
+
+    // Pasamos a minúscula para no tener que escribir cada vocal dos veces
+    switch (c.toLowerCase()) {
+        case "a": case "e": case "i": case "o": case "u":
+            tipo = "vocal";
+            break;
+        case "0": case "1": case "2": case "3": case "4":
+        case "5": case "6": case "7": case "8": case "9":
+            tipo = "número";
+            break;
+        default:
+            // Si al pasar a mayúsculas cambia, es una letra (las demás letras son consonantes)
+            if (c.toLowerCase() != c.toUpperCase()) {
+                tipo = "consonante";
+            } else {
+                tipo = "otro carácter";
+            }
+    }
+
+    let texto = `'${c}' es ${tipo}`;
+    if (tipo == "vocal" || tipo == "consonante") {
+        texto += (c === c.toUpperCase()) ? " y está en mayúsculas" : " y está en minúsculas";
+    }
+    document.write("<p>" + texto + "</p>");
+}
+
+// ==============================================================
+// VERSIÓN 3: switch(true) con códigos ASCII (charCodeAt)
+// ==============================================================
+function version3() {
+    let c;
+    do {
+        c = prompt("Introduce UN solo carácter:");
+    } while (c === null || c.length !== 1);
+
+    let codigo = c.charCodeAt(0);   // '0'..'9' = 48..57 · 'A'..'Z' = 65..90 · 'a'..'z' = 97..122
+    let esVocal = "aeiouAEIOU".includes(c);
+    let resultado;
+
+    switch (true) {
+        case codigo >= 48 && codigo <= 57:
+            resultado = "es un número";
+            break;
+        case codigo >= 65 && codigo <= 90:
+            resultado = esVocal ? "es una vocal en mayúsculas" : "es una consonante en mayúsculas";
+            break;
+        case codigo >= 97 && codigo <= 122:
+            resultado = esVocal ? "es una vocal en minúsculas" : "es una consonante en minúsculas";
+            break;
+        default:
+            resultado = "es otro carácter (código " + codigo + ")";
+    }
+
+    document.write("<p>'" + c + "' " + resultado + "</p>");
+}
+
+// ==============================================================
+// SELECTOR: solo sirve para elegir qué versión ejecutar.
+// En el examen pondrías directamente el código de una versión.
+// ==============================================================
+let eleccion = prompt("¿Qué versión quieres ejecutar?\n1) switch(true): cada case es una condición\n2) switch normal agrupando case (vocales y dígitos)\n3) switch(true) con códigos ASCII (charCodeAt)", "1");
+document.write("<h2>Versión " + eleccion + "</h2>");
+switch (eleccion) {
+    case "1": version1(); break;
+    case "2": version2(); break;
+    case "3": version3(); break;
+    default:  document.write("<p>Recarga la página (F5) y elige 1, 2 o 3</p>");
+}
+</script>
+<p><a href='index.html'>← Volver al índice</a></p>
+</body>
+</html>
