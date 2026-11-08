@@ -7,7 +7,14 @@
 </head>
 <body>
 
+    <table id="calendario">
+
+    </table>
+
     <script>
+
+        // Año actual
+        const ANIO_CALENDARIO = 2026
 
         // Declarar variable que guardará el numero del mes que ingrese el usuario
         let entradaMes
@@ -16,18 +23,23 @@
             // Pedir mes al usuario    
             entradaMes = Number(prompt('Ingresa un mes (en numero) por ejemplo 2 = \'febrero\' o 10 = \'octubre\''))
             
-            // Comprobar rango, ni que sea 0 ni un numero negativo, y que no sea mayor a 12 ya que no existe un mes '13' ni '14'
-            if (entradaMes <= 0 || entradaMes > 12) {
+            // Comprobar tipo de dato, y rango ni que sea 0 ni un numero negativo, y que no sea mayor a 12 ya que no existe un mes '13' ni '14'
+            if (!Number.isInteger(entradaMes)){
+
+                alert('El mes debe ser numerico')
+
+            } else if (entradaMes <= 0 || entradaMes > 12) {
+
                 alert('No es un mes valido, el numero ingresado debe ser mayor a 0 y menor o igual que 12')
+
             } else {
-                // Si s encuentra en el rango valido
+
+                // Si se encuentra en el rango valido, y es un numero
+
                 break // Romper y salir del bucle
             }
 
         } while (true);
-        
-        // Flag de prueba
-        console.log(entradaMes)
 
         // Array doble indexado
         const festivos = [[1,6], [], [], [17, 18, 23], [1], [], [], [15], [], [12], [1], [6, 8, 25]]
@@ -35,55 +47,78 @@
         // Array de los dias
         const diasSemana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
         
-        const anioCalendario = 2026
-
-        // ¿Qué dia empieza el mes seleccionado por el usuario?
-        const empieza = new Date(anioCalendario, entradaMes-1)
-        
-        // FLag para comprobar si estamos bien
-        console.log(`El mes: ${mes} y el dia ${empieza}`)
+        // Construir objeto Date para obtener el mes completo elegido por el usuario
+        const mesElegido = new Date(ANIO_CALENDARIO, entradaMes-1, 1)
 
         // Ir al indice del mes en el array doble indexado
-        const posicion = festivos[mes]
+        const festivosMes = festivos[entradaMes-1]
 
-        // Para imprimir los numeros (de los dias)
-        let dias = 1 // Empezamos por el dia 1
+        // ===========================================================================
+        // Escritura de los días del mes especificado, es decir los numeros, desde el 1 hasta el 30 o 31 dependiendo del mes elegido
+        // ===========================================================================
+        
+        let html = ""
+
+        html += "<tr>"
 
         // Apartado de escritura del calendario
-
+        
         // Escribir los dias de la semana
         for (let i = 0; i < diasSemana.length; i++) {
             
             // Encabezado Nombres de los dias de la semana
-            document.write("<tr>")
-            document.write("<td>"+diasSemana[i]+"</td>")
-            document.write("<td>"+"   "+"</td>")
+            html += "<th>"+diasSemana[i]+"</th>"
+        }
 
-            // Comprobar si la posicion tiene mas de un elemento para recorrerlo, si no, solamente se imprime el elemento existente
+        html += "</tr>"
 
-            if (posicion.length >= 1){ // Si tiene uno o mas elementos
+        // Calculo de los dias
+        let empieza = mesElegido.getDay()
 
-                // --------------------- Hasta aca voy
+        let huecos
 
-                // Elemento tr
-                document.write("<tr>")
+        if (empieza == 0){
+            huecos = 6
+        } else {
+            huecos = empieza-1
+        }
 
-                for (let j = 0; j < posicion.length; j++) {
-                    document.write()
-                }
+        html += "<tr>"
 
-                document.write("</tr>")
+        // Fin de mes
+        const obtenerFinMes = new Date(mesElegido.getFullYear(), mesElegido.getMonth() +1, 0)
 
-            } else {
-                // Si no tiene elementos, no se imprime el festivo
+        const finMes = obtenerFinMes.getDate()
+        
+        for (let i = 0; i < huecos; i++) {
+
+            html += "<td></td>"
+
+        }
+
+        // Variable de control
+        let celdas = huecos
+
+        for (let i = 1; i <= finMes; i++) {
+
+            // Comprobar festivo
+            html += (festivosMes.includes(i)) ? "<td style='color:red'>"+i+"</td>": "<td>"+i+"</td>"
+
+            celdas++
+
+            if (celdas == 7){
+                // Cierro la fila y abro otra
+                html += "</tr><tr>"
+                celdas = 0
             }
-            
-
-            document.write("</tr>")
         }
         
-        
-             
+        html += "</tr>"
+
+
+        let calendario = document.getElementById("calendario")
+
+        calendario.innerHTML = html     
     </script>
 </body>
 </html>
