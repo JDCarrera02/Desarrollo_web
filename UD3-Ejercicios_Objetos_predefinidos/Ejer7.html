@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 7</title>
+</head>
+<body>
+    <script>
+
+        let cadenaEntrada = prompt('Escribe algo, para comprobar si es palíndromo')
+        
+         // 1. Todo a minúsculas y sin tildes ni espacios
+        var limpia = cadenaEntrada.toLowerCase().trim()
+        limpia = limpia.replaceAll("á", "a").replaceAll("é", "e").replaceAll("í", "i")
+                   .replaceAll("ó", "o").replaceAll("ú", "u");
+        limpia = limpia.replaceAll(" ", "")
+
+        // 2. Darle la vuelta: texto → array de letras → al revés → otra vez texto
+        var alReves = limpia.split("").reverse().join("")
+
+        if (limpia == alReves) {
+            document.write("<p>\"" + cadenaEntrada + "\" SÍ es un palíndromo</p>");
+        } else {
+            document.write("<p>\"" + cadenaEntrada + "\" NO es un palíndromo</p>");
+        }   
+        document.write("<p>(" + limpia + " / " + alReves + ")</p>");
+    </script>
+</body>
+</html>

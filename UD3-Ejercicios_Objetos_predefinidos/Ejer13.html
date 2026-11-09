@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 13</title>
+</head>
+<body>
+    <script>
+        
+        let fecha = new Date(2015, 10, 26);
+
+        // El navegador lo traduce solo al idioma que le pidamos
+        let opciones = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+        let texto = fecha.toLocaleDateString("es-ES", opciones);
+
+        document.write(`<p>${texto}</p>`); // jueves, 26 de noviembre de 2015
+        document.write(`<p>Hoy: ${new Date().toLocaleDateString("es-ES", opciones)}</p>`);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 10</title>
+</head>
+<body>
+    <script>
+        var fecha = prompt("Fecha (dd-mm-aaaa):", "29-02-2024");
+        var partes = fecha.split("-");             // "29-02-2024" → ["29", "02", "2024"]
+        var valida = false;
+
+        // Formato: 3 trozos de 2, 2 y 4 caracteres, y todos números
+        if (partes.length == 3 && partes[0].length == 2 && partes[1].length == 2 && partes[2].length == 4
+            && !isNaN(partes[0]) && !isNaN(partes[1]) && !isNaN(partes[2])) {
+
+            var dia = parseInt(partes[0]);
+            var mes = parseInt(partes[1]);
+            var anio = parseInt(partes[2]);
+
+            var diasMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            // Año bisiesto → febrero tiene 29
+            if ((anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0) {
+                diasMes[1] = 29;
+            }
+
+            if (mes >= 1 && mes <= 12 && dia >= 1 && dia <= diasMes[mes - 1]) {
+                valida = true;
+            }
+        }
+
+        document.write("<p>" + fecha + (valida ? " es una fecha correcta" : " NO es una fecha correcta") + "</p>");
+
+    </script>
+        
+    
+</body>
+</html>

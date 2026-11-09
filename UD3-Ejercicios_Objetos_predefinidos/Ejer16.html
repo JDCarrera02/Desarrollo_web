@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 16</title>
+</head>
+<body>
+    
+    <h1><center>HORARIO 2° DAM</center></h1>
+
+    <center>
+        <table id="horario" border="1">
+
+        </table>
+    </center>
+    
+    <script>
+
+        // Array con los dias de la semana (nombre)
+        const DIAS_SEMANA = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
+
+        // Array con el horario
+        const HORARIO = [
+            ["IPPE", "PROY", "IPPE", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SASP"],             
+            ["RECREO","RECREO","RECREO","RECREO","RECREO"],             
+            ["DWC", "PMDM", "PMDM", "PROY", "DI"],             
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"],             
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"] 
+        ]
+
+        // Escribir cabecera
+        let html = ""
+
+        html += "<tr>"
+
+        // Hueco vacío
+        html += "<th></th>"
+
+        for (let i = 0; i < DIAS_SEMANA.length; i++) {
+            // Escribir día de la semana
+            html += "<th>"+DIAS_SEMANA[i]+"</th>"
+        }
+
+        // Cerramos etiqueta de la cabecera
+        html += "</tr>"
+
+        // Escritura de las asignaturas por día
+
+        let hora = new Date()
+        hora.setHours(15, 45)
+
+        for (let i = 0; i < HORARIO.length; i++) {
+
+            // Guardar inicio de la hora
+            let inicioHora = formatearHora(hora)
+
+            // Abrir tr en cada vuelta
+            html += "<tr>"
+            
+            // La fila actual es el recreo?
+            let esRecreo = HORARIO[i][0] == "RECREO"
+
+            // La siguiente fila es el recreo? Primero se comprueba que exista una siguiente fila
+            let siguienteEsRecreo = (i+1 < HORARIO.length) && HORARIO[i+1][0] == "RECREO"
+
+            // Operaciones (cálculo de la hora)
+            
+            // Verificar si nos encontramos en la fila del recreo
+
+            // Si nos encontramos en la fila del recreo, sumamos 15 minutos a la hora
+            if (esRecreo) { 
+                // Si es el recreo, le sumamos 15 minutos a la hora actual
+                hora.setMinutes(hora.getMinutes()+15)
+
+            } else {
+                // Si no, sumamos 50 minutos a la hora
+                hora.setMinutes(hora.getMinutes()+50)
+            }
+
+            // Variable que guardará el final de la hora después del cálculo
+            let fin = formatearHora(hora)
+
+            // Sumar los 5 minutos de descanso entre asignaturas, sólo si no es el recreo
+            if(!esRecreo && !siguienteEsRecreo){
+                hora.setMinutes(hora.getMinutes()+5)
+            }
+
+            // Luego de la operacion, se pinta en la tabla
+            html += "<th>"+inicioHora+"-"+fin+"</th>"
+
+            // For que recorre las columnas
+            for (let j = 0; j < HORARIO[i].length; j++) {
+                html += "<td>"+HORARIO[i][j]+"</td>"
+            }
+            
+            // Cerrar tr al finalizar operaciones
+            html += "</tr>"
+        }
+    
+
+        let horarioHtml = document.getElementById("horario")
+        horarioHtml.innerHTML = html
+
+        function formatearHora(fecha){
+
+            let h = String(fecha.getHours()).padStart(2, "0")
+
+            let m = String(fecha.getMinutes()).padStart(2, "0")
+
+            return h+":"+m
+        }
+
+    </script>
+    
+</body>
+</html>

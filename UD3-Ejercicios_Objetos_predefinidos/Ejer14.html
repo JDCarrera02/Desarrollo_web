@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 14</title>
+</head>
+<body>
+
+    <script>
+
+        let anio = parseInt(prompt("Introduce un año:", "2024"));
+
+        // Creamos el 29 de febrero. Si ese año no existe, Date lo convierte en 1 de marzo
+        let fecha = new Date(anio, 1, 29);        // mes 1 = febrero
+
+        if (fecha.getMonth() == 1) {              // sigue siendo febrero → existe el 29
+            document.write("<p>" + anio + " es bisiesto</p>");
+        } else {
+            document.write("<p>" + anio + " no es bisiesto</p>");
+        }
+
+        // Segunda version
+        /*
+        let anio = Number(prompt("Introduce un año:", "2024"));
+
+        // El día 0 de marzo es el último día de febrero (mismo truco que en el calendario)
+        let diasFebrero = new Date(anio, 2, 0).getDate();
+
+        document.write(`<p>Febrero de ${anio} tiene ${diasFebrero} días → ${diasFebrero === 29 ? "bisiesto" : "no bisiesto"}</p>`);
+        */
+
+    </script>
+    
+</body>
+</html>

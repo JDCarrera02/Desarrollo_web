@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 9</title>
+</head>
+<body>
+
+    <script>
+
+        let frase = prompt("Escribe una frase:", "hOLA mUNDO cruel");
+        let palabras = frase.split(" ");
+
+        for (let i = 0; i < palabras.length; i++) {
+            
+            let p = palabras[i];
+
+            // primera letra en mayúscula + el resto (desde la posición 1) en minúscula
+            palabras[i] = p.charAt(0).toUpperCase() + p.substring(1).toLowerCase();
+        }
+
+        document.write("<p>" + palabras.join(" ") + "</p>");
+
+    </script>
+    
+</body>
+</html>

@@ -8,6 +8,25 @@
 <body>
     <script>
         
+        const entrada = prompt('Escribe un correo electronico')
+
+        let patron = /^([a-zA-Z0-9\-]+)@([a-zA-Z0-9]+)\.([a-zA-Z]{2,})$/
+
+        let comprobar = entrada.match(patron)
+
+        if (comprobar === null){
+            
+            document.write('El correo electronico no es valido')
+
+        } else {
+            
+            document.write('El correo electronico es valido')
+            document.write('<br>')
+
+            document.write('Nombre de usuario: '+comprobar[1]+"<br>")
+            document.write('Dominio: '+comprobar[2]+ "."+comprobar[3])
+        }
+
     </script>
 </body>
 </html>

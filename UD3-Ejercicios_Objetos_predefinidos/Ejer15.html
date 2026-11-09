@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 15</title>
+</head>
+<body>
+
+    <script>
+
+        var dia = parseInt(prompt("Día de nacimiento:", "26"));
+        var mes = parseInt(prompt("Mes de nacimiento (1-12):", "11"));
+        var anio = parseInt(prompt("Año de nacimiento:", "2000"));
+
+        var hoy = new Date();
+        var edad = hoy.getFullYear() - anio;
+
+        // ¿Todavía no ha llegado su cumpleaños este año? → un año menos
+        var mesHoy = hoy.getMonth() + 1;
+        if (mesHoy < mes || (mesHoy == mes && hoy.getDate() < dia)) {
+            edad--;
+        }
+
+        document.write("<p>Tienes " + edad + " años</p>");
+
+    </script>
+    
+</body>
+</html>

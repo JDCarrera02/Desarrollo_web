@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 11</title>
+</head>
+<body>
+
+    <button onclick="empezar()"></button>
+
+    <button onclick="finalizar()"></button>
+
+    <script>
+        var inicio = null;
+
+        function empezar() {
+            inicio = new Date();                  // guardamos el momento exacto del clic
+        }
+
+        function finalizar() {
+            if (inicio == null) {
+                alert("Primero pulsa 'Empezar a contar'");
+                return;
+            }
+            var fin = new Date();
+
+            var ms = fin - inicio;                // restar Date → milisegundos}
+
+            alert("Han pasado " + (ms / 1000) + " segundos");
+
+            inicio = null;                        // listo para otra medición
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 12</title>
+</head>
+<body>
+
+    <script>
+
+        let dia = parseInt(prompt("Día de nacimiento:", "26"));
+        let mes = parseInt(prompt("Mes de nacimiento (1-12):", "11"));
+        let anio = parseInt(prompt("Año de nacimiento:", "2015"));
+
+        let fecha = new Date(anio, mes - 1, dia);    // OJO: enero = 0, diciembre = 11
+
+        let dd = String(fecha.getDate()).padStart(2, "0");       // getDate = día del mes
+        let mm = String(fecha.getMonth() + 1).padStart(2, "0");  // +1 para volver a 1-12
+        let aaaa = fecha.getFullYear();
+
+        document.write("<p>Naciste el " + dd + "-" + mm + "-" + aaaa + "</p>");
+
+    </script>
+    
+</body>
+</html>

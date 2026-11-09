@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 8</title>
+</head>
+<body>
+
+    <script>
+        let completo = prompt("Nombre y apellidos:", "Juan Carrera López");
+        let espacio = completo.indexOf(" ");            // posición del primer espacio
+
+        let nombre = completo.substring(0, espacio);    // antes del espacio
+        let apellidos = completo.substring(espacio + 1);  // después del espacio
+
+        document.write("<p>" + apellidos + ", " + nombre + "</p>");
+    </script>
+    
+</body>
+</html>
