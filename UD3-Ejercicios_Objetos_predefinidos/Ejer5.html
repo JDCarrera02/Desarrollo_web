@@ -35,7 +35,6 @@
             } else {
 
                 // Si se encuentra en el rango valido, y es un numero
-
                 break // Romper y salir del bucle
             }
 
@@ -73,12 +72,12 @@
         html += "</tr>"
 
         // Calculo de los dias
-        let empieza = mesElegido.getDay()
+        let empieza = mesElegido.getDay() // 0 = Domingo y 6 = Sabado
 
         let huecos
 
-        if (empieza == 0){
-            huecos = 6
+        if (empieza == 0){ 
+            huecos = 6 
         } else {
             huecos = empieza-1
         }
@@ -86,9 +85,9 @@
         html += "<tr>"
 
         // Fin de mes
-        const obtenerFinMes = new Date(mesElegido.getFullYear(), mesElegido.getMonth() +1, 0)
+        const obtenerFinMes = new Date(mesElegido.getFullYear(), mesElegido.getMonth() +1, 0) // Ultimo del mes actual
 
-        const finMes = obtenerFinMes.getDate()
+        const finMes = obtenerFinMes.getDate() // 30
         
         for (let i = 0; i < huecos; i++) {
 
