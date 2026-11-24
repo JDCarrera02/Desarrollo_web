@@ -10,28 +10,54 @@ Dicho array debe ser definido a mano en el código.
 Ejemplo
 listaServidores=[“terra.es”,”google.com”,”marca.es”,”yahoo.es”];
 
+
+const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+return regex.test(email.trim());
+
 */
 
-var regex = new RegExp("^[a-zAZ0-9/_]+@[a-zA-Z0-9/_]\.[a-zA-Z]{2,}$")
+const regex = /^[a-zAZ0-9/_]+@[a-zA-Z0-9/_]+\.[a-zA-Z]{2,}$/
 
 let campoEntrada = document.getElementById("campo_email")
-p.className = "parrafo_dialogo"
+let html = ""
 
-let p = document.createElement("p")
+// Para validar el servidor
+const listaServidores = ["terra.es","google.com", "marca.es", "yahoo.es"]
 
 function validarEmail(){
+
+    html += "<p>"
 
     // Obtener la entrada del usuario
     const entradaUsuario = String(campoEntrada.value).trim()
 
-    console.log(entradaUsuario)
-
     // Validar formato
-    if (!entradaUsuario.match(regex)) {
+    if (!regex.test(entradaUsuario)) {
         
-        console.log('nada')
-        
+        alert('NO es el formato correcto')
+        return
     }
+
+    html += "Formato correcto"
+
+    // Validar que se encuentra en un servidor valido
+
+    // Obtener servidor (de la entrada del usuario)
+    const servidorUsuario = entradaUsuario.substring(entradaUsuario.search('@'), entradaUsuario.length)
+
+    // Comparar si el servidor del usuario concuerda con alguno de los que son validos (de la lista de servidores)
+    const esValido = listaServidores.includes(servidorUsuario.substring(1))
+
+    if (!esValido) {
+        
+        alert(`El servidor: ${servidorUsuario} no es válido, debe estar entre estos servidores... ${listaServidores.toString()}`)
+        return
+    }
+
+    html += "</p>"
+
+    // En el caso que sea valido, se le dice al usuario
+    // document.body.innerHTML(html)
 }
 
 
